@@ -1,0 +1,337 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Design Tokens ─────────────────────────────────────────── */
+:root {
+  --radius: 0.625rem;
+
+  /* Backgrounds */
+  --bg-page: #050508;
+  --bg-surface: rgba(12, 12, 20, 0.92);
+  --bg-elevated: rgba(18, 18, 30, 0.95);
+
+  /* Text */
+  --text-primary: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --text-muted: #4E5A6E;
+
+  /* Borders */
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-medium: rgba(255, 255, 255, 0.12);
+
+  /* Accents */
+  --accent-blue: #3B82F6;
+  --accent-green: #22C55E;
+  --accent-red: #EF4444;
+  --accent-amber: #F59E0B;
+  --accent-cyan: #22D3EE;
+
+  /* Shadcn tokens */
+  --background: 222 47% 4%;
+  --foreground: 210 40% 96%;
+  --card: 222 47% 6%;
+  --card-foreground: 210 40% 96%;
+  --popover: 222 47% 6%;
+  --popover-foreground: 210 40% 96%;
+  --primary: 221 83% 59%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 217 33% 17%;
+  --secondary-foreground: 210 40% 96%;
+  --muted: 217 33% 12%;
+  --muted-foreground: 215 16% 57%;
+  --accent: 217 33% 17%;
+  --accent-foreground: 210 40% 96%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217 33% 17%;
+  --input: 217 33% 17%;
+  --ring: 221 83% 59%;
+
+  /* Sidebar */
+  --sidebar-background: 222 47% 4%;
+  --sidebar-foreground: 210 40% 96%;
+  --sidebar-primary: 221 83% 59%;
+  --sidebar-primary-foreground: 210 40% 98%;
+  --sidebar-accent: 217 33% 10%;
+  --sidebar-accent-foreground: 210 40% 96%;
+  --sidebar-border: 217 33% 14%;
+  --sidebar-ring: 221 83% 59%;
+}
+
+/* ── Base ─────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+input, select, textarea, button {
+  font-family: inherit;
+}
+
+/* ── Glass Components ─────────────────────────────────────── */
+@layer components {
+  .glass-card {
+    background: linear-gradient(135deg, rgba(20, 20, 36, 0.9) 0%, rgba(12, 12, 22, 0.95) 100%);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 1rem 1.125rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.025) 0%, transparent 60%);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  .glass-elevated {
+    background: linear-gradient(135deg, rgba(24, 24, 44, 0.96) 0%, rgba(16, 16, 28, 0.98) 100%);
+    border: 1px solid var(--border-medium);
+    border-radius: 12px;
+    padding: 1rem 1.125rem;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,255,0.04) inset;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-elevated::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 60%);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  /* ── Buttons ─────────────────────────────────────────────── */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    padding: 0.4375rem 0.875rem;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s, box-shadow 0.15s;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+    white-space: nowrap;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.92;
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
+    transform: translateY(-1px);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    padding: 0.4375rem 0.875rem;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border-color: var(--border-medium);
+  }
+
+  /* ── Status Badges ───────────────────────────────────────── */
+  .status-badge-online {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 2px 7px;
+    font-size: 11px;
+    font-weight: 500;
+    border-radius: 100px;
+    background: rgba(34, 197, 94, 0.12);
+    color: #22C55E;
+    border: 1px solid rgba(34, 197, 94, 0.25);
+  }
+
+  .status-badge-offline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 2px 7px;
+    font-size: 11px;
+    font-weight: 500;
+    border-radius: 100px;
+    background: rgba(100, 116, 139, 0.12);
+    color: #64748B;
+    border: 1px solid rgba(100, 116, 139, 0.25);
+  }
+
+  .status-badge-warning {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 2px 7px;
+    font-size: 11px;
+    font-weight: 500;
+    border-radius: 100px;
+    background: rgba(245, 158, 11, 0.12);
+    color: #F59E0B;
+    border: 1px solid rgba(245, 158, 11, 0.25);
+  }
+
+  .status-badge-critical {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 2px 7px;
+    font-size: 11px;
+    font-weight: 500;
+    border-radius: 100px;
+    background: rgba(239, 68, 68, 0.12);
+    color: #EF4444;
+    border: 1px solid rgba(239, 68, 68, 0.25);
+  }
+
+  .status-badge-neutral {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 2px 7px;
+    font-size: 11px;
+    font-weight: 500;
+    border-radius: 100px;
+    background: rgba(148, 163, 184, 0.1);
+    color: #64748B;
+    border: 1px solid rgba(148, 163, 184, 0.15);
+  }
+
+  /* ── Table ───────────────────────────────────────────────── */
+  .table-row-hover:hover {
+    background: rgba(255, 255, 255, 0.03) !important;
+  }
+
+  /* ── Pulse Dot ───────────────────────────────────────────── */
+  .pulse-dot {
+    animation: pulse-ring 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-ring {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.15); }
+  }
+
+  /* ── Scrollbar ───────────────────────────────────────────── */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.1) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.12);
+    border-radius: 2px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.2);
+  }
+}
+
+/* ── Auth pages gradient background ─────────────────────────── */
+.auth-bg {
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -10%, rgba(59, 130, 246, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 80%, rgba(34, 211, 238, 0.06) 0%, transparent 50%),
+    var(--bg-page);
+  min-height: 100vh;
+}
+
+/* ── Page layout ─────────────────────────────────────────────── */
+.page-content {
+  padding-top: 56px;
+}
+
+/* ── Leaflet dark popup ──────────────────────────────────────── */
+.dark-popup .leaflet-popup-content-wrapper {
+  background: rgba(12, 12, 22, 0.97);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  color: var(--text-primary);
+}
+
+.dark-popup .leaflet-popup-tip {
+  background: rgba(12, 12, 22, 0.97);
+}
+
+.dark-popup .leaflet-popup-close-button {
+  color: var(--text-muted) !important;
+}
+
+/* Override Leaflet default tile colours */
+.leaflet-container {
+  background: #0a0a12 !important;
+  font-family: inherit !important;
+}
+
+/* ── Input autofill ──────────────────────────────────────────── */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px rgba(20, 20, 36, 0.95) inset !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* ── Gradient text helper ────────────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(135deg, #60A5FA 0%, #22D3EE 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
