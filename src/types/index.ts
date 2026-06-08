@@ -2,7 +2,7 @@ export type MachineStatus = 'online' | 'offline' | 'low_stock' | 'critical';
 export type MachineType = 'snack' | 'drink' | 'combo';
 export type AlertSeverity = 'critical' | 'warning' | 'info';
 export type AlertType = 'low_stock' | 'machine_offline' | 'maintenance_due' | 'revenue_drop';
-export type PlanType = 'free' | 'pro' | 'enterprise';
+export type PlanType = 'free' | 'operator' | 'pro' | 'business' | 'enterprise';
 export type SupplierName = 'amazon_business' | 'sysco' | 'sams_club' | 'walmart_business' | 'manual';
 export type RestockOrderStatus = 'draft' | 'submitted' | 'confirmed' | 'shipped' | 'delivered' | 'cancelled';
 export type SiteType = 'office' | 'manufacturing' | 'hospital' | 'school' | 'hotel' | 'gym' | 'transit' | 'retail' | 'other';
@@ -77,7 +77,21 @@ export interface Profile {
   business_name: string;
   email: string;
   avatar_url?: string;
+  is_super_admin?: boolean;
   created_at: string;
+}
+
+export interface AdminTenant {
+  user_id: string;
+  business_name: string;
+  email: string;
+  plan: PlanType;
+  plan_status: 'active' | 'cancelled' | 'past_due';
+  machine_count: number;
+  weekly_revenue: number;
+  machine_limit: number;
+  joined_at: string;
+  last_active?: string;
 }
 
 export interface Subscription {
