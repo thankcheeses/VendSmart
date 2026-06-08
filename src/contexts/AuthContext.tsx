@@ -114,9 +114,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   async function seedDemoMachines(userId: string, businessName: string) {
     if (!supabase) return;
     const demos = [
-      { name: `${businessName} - Location 1`, location_address: '350 Fifth Ave, New York, NY', latitude: 40.7484, longitude: -73.9967, machine_type: 'combo', capacity_slots: 48, commission_percent: 12, status: 'online', fill_percentage: 78, weekly_revenue: 412, last_visit_date: new Date().toISOString().split('T')[0] },
-      { name: `${businessName} - Location 2`, location_address: '1515 Broadway, New York, NY', latitude: 40.7579, longitude: -73.9855, machine_type: 'drink', capacity_slots: 32, commission_percent: 15, status: 'online', fill_percentage: 65, weekly_revenue: 287, last_visit_date: new Date().toISOString().split('T')[0] },
-      { name: `${businessName} - Location 3`, location_address: '89 E 42nd St, New York, NY', latitude: 40.7527, longitude: -73.9772, machine_type: 'snack', capacity_slots: 40, commission_percent: 10, status: 'low_stock', fill_percentage: 28, weekly_revenue: 195, last_visit_date: new Date(Date.now() - 3 * 86400000).toISOString().split('T')[0] },
+      { name: `${businessName} — Main Office`, location_address: '100 Corporate Drive, Building A', latitude: 40.7484, longitude: -73.9967, machine_type: 'combo', capacity_slots: 48, commission_percent: 12, status: 'online', fill_percentage: 78, weekly_revenue: 412, last_visit_date: new Date().toISOString().split('T')[0] },
+      { name: `${businessName} — Warehouse Floor`, location_address: '500 Industrial Pkwy, Dock 3', latitude: 40.7295, longitude: -74.0040, machine_type: 'drink', capacity_slots: 32, commission_percent: 15, status: 'online', fill_percentage: 65, weekly_revenue: 287, last_visit_date: new Date().toISOString().split('T')[0] },
+      { name: `${businessName} — Break Room`, location_address: '100 Corporate Drive, Floor 2', latitude: 40.7484, longitude: -73.9950, machine_type: 'snack', capacity_slots: 40, commission_percent: 10, status: 'low_stock', fill_percentage: 28, weekly_revenue: 195, last_visit_date: new Date(Date.now() - 3 * 86400000).toISOString().split('T')[0] },
     ];
     await supabase.from('machines').insert(demos.map(d => ({ ...d, user_id: userId })));
   }

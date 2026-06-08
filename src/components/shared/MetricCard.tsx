@@ -22,21 +22,28 @@ export default function MetricCard({ label, value, subtitle, change, accentColor
   const accent = accentMap[accentColor];
 
   return (
-    <div className="glass-card flex flex-col justify-between" style={{ borderLeft: `3px solid ${accent}` }}>
-      <div className="flex items-center justify-between mb-2">
-        <span className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
+    <div className="glass-card flex flex-col justify-between min-h-[96px]">
+      <div className="flex items-start justify-between mb-2.5">
+        <span className="text-[11px] font-medium" style={{ color: 'var(--text-muted)', letterSpacing: '0.01em' }}>
           {label}
         </span>
-        {icon && <span style={{ color: accent, opacity: 0.7 }}>{icon}</span>}
+        {icon && (
+          <span
+            className="flex items-center justify-center rounded-lg"
+            style={{ width: 28, height: 28, background: `${accent}18`, color: accent }}
+          >
+            {icon}
+          </span>
+        )}
       </div>
-      <div className="text-2xl font-bold tracking-tight" style={{ color: 'var(--text-primary)', letterSpacing: '-0.03em' }}>
+      <div className="text-[26px] font-semibold leading-none" style={{ color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
         {value}
       </div>
-      <div className="flex items-center justify-between mt-2">
+      <div className="flex items-center justify-between mt-2.5">
         <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>{subtitle}</span>
         {change !== 0 && (
-          <span className="text-xs font-medium flex items-center gap-0.5" style={{ color: isPositive ? '#22C55E' : '#EF4444' }}>
-            {isPositive ? '↑' : '↓'} {Math.abs(change)}%
+          <span className="text-xs font-medium" style={{ color: isPositive ? 'var(--accent-green)' : 'var(--accent-red)' }}>
+            {isPositive ? '▴' : '▾'} {Math.abs(change)}%
           </span>
         )}
       </div>

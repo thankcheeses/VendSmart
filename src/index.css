@@ -7,9 +7,9 @@
   --radius: 0.625rem;
 
   /* Backgrounds */
-  --bg-page: #050508;
-  --bg-surface: rgba(12, 12, 20, 0.92);
-  --bg-elevated: rgba(18, 18, 30, 0.95);
+  --bg-page: #09090F;
+  --bg-surface: #0D0D16;
+  --bg-elevated: #12121C;
 
   /* Text */
   --text-primary: #F1F5F9;
@@ -83,44 +83,18 @@ input, select, textarea, button {
 /* ── Glass Components ─────────────────────────────────────── */
 @layer components {
   .glass-card {
-    background: linear-gradient(135deg, rgba(20, 20, 36, 0.9) 0%, rgba(12, 12, 22, 0.95) 100%);
+    background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 1rem 1.125rem;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .glass-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.025) 0%, transparent 60%);
-    border-radius: inherit;
-    pointer-events: none;
   }
 
   .glass-elevated {
-    background: linear-gradient(135deg, rgba(24, 24, 44, 0.96) 0%, rgba(16, 16, 28, 0.98) 100%);
+    background: var(--bg-elevated);
     border: 1px solid var(--border-medium);
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 1rem 1.125rem;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,255,0.04) inset;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .glass-elevated::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 60%);
-    border-radius: inherit;
-    pointer-events: none;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
   }
 
   /* ── Buttons ─────────────────────────────────────────────── */

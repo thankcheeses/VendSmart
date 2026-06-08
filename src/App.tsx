@@ -14,6 +14,7 @@ import MachinesPage from '@/pages/MachinesPage';
 import AnalyticsPage from '@/pages/AnalyticsPage';
 import AlertsPage from '@/pages/AlertsPage';
 import RestockMapPage from '@/pages/RestockMapPage';
+import RestockOrderPage from '@/pages/RestockOrderPage';
 import SettingsPage from '@/pages/SettingsPage';
 import LoginPage from '@/pages/LoginPage';
 import SignupPage from '@/pages/SignupPage';
@@ -28,6 +29,7 @@ const navToPath: Record<string, string> = {
   analytics: '/analytics',
   alerts: '/alerts',
   restock: '/restock',
+  orders: '/orders',
   settings: '/settings',
 };
 
@@ -46,7 +48,7 @@ function DashboardShell() {
   const navigate = useNavigate();
   const location = useLocation();
   const { machines } = useMachines();
-  const { alerts } = useAlerts();
+  const { alerts, acknowledgeAlert } = useAlerts();
   const metrics = useDashboardMetrics(machines, alerts);
   const { subscription } = useAuth();
 
@@ -61,7 +63,13 @@ function DashboardShell() {
     <div style={{ background: 'var(--bg-page)', minHeight: '100vh' }}>
       {isDemoMode && <DemoBanner />}
       {subscription && <UpgradeBanner machineCount={machines.length} machineLimit={subscription.machine_limit} />}
-      <AppHeader activeNav={activeNav} onNavChange={handleNavChange} alertCount={unackAlerts} />
+      <AppHeader
+        activeNav={activeNav}
+        onNavChange={handleNavChange}
+        alertCount={unackAlerts}
+        alerts={alerts}
+        onAcknowledgeAlert={acknowledgeAlert}
+      />
 
       <div
         style={{
@@ -78,6 +86,7 @@ function DashboardShell() {
             <Route path="/analytics" element={<AnalyticsPage />} />
             <Route path="/alerts" element={<AlertsPage />} />
             <Route path="/restock" element={<RestockMapPage />} />
+            <Route path="/orders" element={<RestockOrderPage />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Routes>
         </main>

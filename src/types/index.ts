@@ -3,6 +3,9 @@ export type MachineType = 'snack' | 'drink' | 'combo';
 export type AlertSeverity = 'critical' | 'warning' | 'info';
 export type AlertType = 'low_stock' | 'machine_offline' | 'maintenance_due' | 'revenue_drop';
 export type PlanType = 'free' | 'pro' | 'enterprise';
+export type SupplierName = 'amazon_business' | 'sysco' | 'sams_club' | 'walmart_business' | 'manual';
+export type RestockOrderStatus = 'draft' | 'submitted' | 'confirmed' | 'shipped' | 'delivered' | 'cancelled';
+export type SiteType = 'office' | 'manufacturing' | 'hospital' | 'school' | 'hotel' | 'gym' | 'transit' | 'retail' | 'other';
 
 export interface Machine {
   id: string;
@@ -18,6 +21,7 @@ export interface Machine {
   fill_percentage: number;
   weekly_revenue: number;
   last_visit_date: string;
+  site_type?: SiteType;
   created_at: string;
 }
 
@@ -41,6 +45,13 @@ export interface Product {
   units_sold_7d: number;
   revenue_7d: number;
   stock_remaining: number;
+  sku?: string;
+  upc?: string;
+  reorder_threshold?: number;
+  reorder_quantity?: number;
+  preferred_supplier?: SupplierName;
+  unit_cost?: number;
+  unit_price?: number;
 }
 
 export interface DailyRevenue {
@@ -79,4 +90,55 @@ export interface Subscription {
   stripe_subscription_id?: string;
   current_period_end?: string;
   created_at: string;
+}
+
+export interface RestockOrderLineItem {
+  product_id: string;
+  product_name: string;
+  machine_name: string;
+  upc?: string;
+  supplier_sku?: string;
+  qty_ordered: number;
+  unit_price: number;
+  total_price: number;
+  supplier: SupplierName;
+}
+
+export interface RestockOrder {
+  id: string;
+  user_id: string;
+  supplier: SupplierName | 'mixed';
+  status: RestockOrderStatus;
+  line_items: RestockOrderLineItem[];
+  order_total: number;
+  supplier_order_id?: string;
+  tracking_number?: string;
+  estimated_delivery?: string;
+  notes?: string;
+  submitted_at?: string;
+  created_at: string;
+}
+
+export interface SupplierIntegration {
+  id: string;
+  user_id: string;
+  supplier_name: SupplierName;
+  status: 'connected' | 'disconnected' | 'error';
+  last_sync_at?: string;
+  created_at: string;
+}
+
+export interface RestockQueueItem {
+  machine_id: string;
+  machine_name: string;
+  product_id: string;
+  product_name: string;
+  current_stock: number;
+  capacity: number;
+  reorder_threshold: number;
+  recommended_qty: number;
+  days_until_stockout: number;
+  urgency: 'critical' | 'warning';
+  estimated_cost: number;
+  preferred_supplier: SupplierName;
 }

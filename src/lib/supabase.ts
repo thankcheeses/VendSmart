@@ -49,6 +49,7 @@ export type Database = {
           fill_percentage: number;
           weekly_revenue: number;
           last_visit_date: string;
+          site_type: string;
           created_at: string;
         };
       };
@@ -75,6 +76,33 @@ export type Database = {
           stripe_customer_id: string | null;
           stripe_subscription_id: string | null;
           current_period_end: string | null;
+          created_at: string;
+        };
+      };
+      restock_orders: {
+        Row: {
+          id: string;
+          user_id: string;
+          supplier: string;
+          status: string;
+          line_items: unknown;
+          order_total: number;
+          supplier_order_id: string | null;
+          tracking_number: string | null;
+          estimated_delivery: string | null;
+          notes: string | null;
+          submitted_at: string | null;
+          created_at: string;
+        };
+      };
+      supplier_integrations: {
+        Row: {
+          id: string;
+          user_id: string;
+          supplier_name: string;
+          status: string;
+          credentials: unknown;
+          last_sync_at: string | null;
           created_at: string;
         };
       };
