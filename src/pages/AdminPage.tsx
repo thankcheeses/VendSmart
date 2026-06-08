@@ -6,11 +6,11 @@ import { supabase, isDemoMode } from '@/lib/supabase';
 import type { AdminTenant, PlanType } from '@/types';
 
 const PLAN_COLOR: Record<PlanType, string> = {
-  free: '#64748B',
-  operator: '#3B82F6',
-  pro: '#8B5CF6',
-  business: '#22D3EE',
-  enterprise: '#F59E0B',
+  free: '#484f58',
+  operator: '#58a6ff',
+  pro: '#00d4c8',
+  business: '#3fb950',
+  enterprise: '#d29922',
 };
 
 const MACHINE_LIMITS: Record<PlanType, number> = {

@@ -6,47 +6,48 @@
 :root {
   --radius: 0.5rem;
 
-  /* Backgrounds — neutral near-black, no purple tint */
+  /* Backgrounds */
   --bg-page: #0f1117;
-  --bg-surface: #13161d;
-  --bg-elevated: #1c2030;
+  --bg-surface: #161b22;
+  --bg-elevated: #1c2128;
 
   /* Text */
-  --text-primary: #F1F5F9;
-  --text-secondary: #8B9EB3;
-  --text-muted: #4B5673;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted: #484f58;
 
   /* Borders */
   --border-subtle: rgba(255, 255, 255, 0.08);
   --border-medium: rgba(255, 255, 255, 0.13);
 
-  /* Accents */
-  --accent-blue: #3B82F6;
-  --accent-green: #22C55E;
-  --accent-red: #EF4444;
-  --accent-amber: #F59E0B;
-  --accent-cyan: #22D3EE;
+  /* Accents — teal is the primary interactive color */
+  --accent-primary: #00d4c8;
+  --accent-blue: #00d4c8;
+  --accent-green: #3fb950;
+  --accent-red: #f85149;
+  --accent-amber: #d29922;
+  --accent-cyan: #58a6ff;
 
   /* Shadcn tokens */
-  --background: 220 20% 7%;
-  --foreground: 210 40% 96%;
-  --card: 220 20% 9%;
-  --card-foreground: 210 40% 96%;
-  --popover: 220 20% 11%;
-  --popover-foreground: 210 40% 96%;
-  --primary: 217 91% 60%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 220 16% 18%;
-  --secondary-foreground: 210 40% 96%;
-  --muted: 220 16% 13%;
-  --muted-foreground: 215 16% 55%;
-  --accent: 220 16% 18%;
-  --accent-foreground: 210 40% 96%;
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 220 16% 18%;
-  --input: 220 16% 18%;
-  --ring: 217 91% 60%;
+  --background: 220 22% 8%;
+  --foreground: 210 20% 92%;
+  --card: 220 22% 10%;
+  --card-foreground: 210 20% 92%;
+  --popover: 220 22% 12%;
+  --popover-foreground: 210 20% 92%;
+  --primary: 177 100% 41%;
+  --primary-foreground: 220 22% 8%;
+  --secondary: 220 14% 18%;
+  --secondary-foreground: 210 20% 92%;
+  --muted: 220 14% 14%;
+  --muted-foreground: 215 10% 55%;
+  --accent: 220 14% 18%;
+  --accent-foreground: 210 20% 92%;
+  --destructive: 3 82% 63%;
+  --destructive-foreground: 210 20% 98%;
+  --border: 220 14% 18%;
+  --input: 220 14% 18%;
+  --ring: 177 100% 41%;
 
   /* Sidebar */
   --sidebar-background: 220 20% 7%;
@@ -106,8 +107,8 @@ input, select, textarea, button {
     font-size: 13px;
     font-weight: 500;
     border-radius: 6px;
-    background: #3B82F6;
-    color: #fff;
+    background: #00d4c8;
+    color: #0f1117;
     border: none;
     cursor: pointer;
     transition: opacity 0.12s;
