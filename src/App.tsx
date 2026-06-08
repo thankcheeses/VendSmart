@@ -14,6 +14,7 @@ import MachinesPage from '@/pages/MachinesPage';
 import AnalyticsPage from '@/pages/AnalyticsPage';
 import AlertsPage from '@/pages/AlertsPage';
 import RestockMapPage from '@/pages/RestockMapPage';
+import RestockOrderPage from '@/pages/RestockOrderPage';
 import SettingsPage from '@/pages/SettingsPage';
 import LoginPage from '@/pages/LoginPage';
 import SignupPage from '@/pages/SignupPage';
@@ -28,6 +29,7 @@ const navToPath: Record<string, string> = {
   analytics: '/analytics',
   alerts: '/alerts',
   restock: '/restock',
+  orders: '/orders',
   settings: '/settings',
 };
 
@@ -84,6 +86,7 @@ function DashboardShell() {
             <Route path="/analytics" element={<AnalyticsPage />} />
             <Route path="/alerts" element={<AlertsPage />} />
             <Route path="/restock" element={<RestockMapPage />} />
+            <Route path="/orders" element={<RestockOrderPage />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Routes>
         </main>

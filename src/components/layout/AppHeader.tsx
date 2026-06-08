@@ -18,7 +18,8 @@ const navItems = [
   { key: 'machines', label: 'Machines' },
   { key: 'analytics', label: 'Analytics' },
   { key: 'alerts', label: 'Alerts' },
-  { key: 'restock', label: 'Restock Map' },
+  { key: 'restock', label: 'Map' },
+  { key: 'orders', label: 'Orders' },
 ];
 
 function timeAgo(dateStr: string): string {

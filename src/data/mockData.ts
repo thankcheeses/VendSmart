@@ -1,4 +1,4 @@
-import type { Machine, MachineAlert, Product, DailyRevenue, DashboardMetrics } from '@/types';
+import type { Machine, MachineAlert, Product, DailyRevenue, DashboardMetrics, RestockOrder, SupplierIntegration } from '@/types';
 
 export const machines: Machine[] = [
   {
@@ -395,3 +395,56 @@ export const currentUser = {
   business_name: 'Demo Operator',
   email: 'demo@vendsmart.app',
 };
+
+export const mockRestockOrders: RestockOrder[] = [
+  {
+    id: 'ord-1',
+    user_id: 'demo-user',
+    supplier: 'amazon_business',
+    status: 'delivered',
+    line_items: [
+      { product_id: 'p4', product_name: 'Red Bull Energy', machine_name: 'Transit Hub — Main Concourse', upc: '611269111693', supplier_sku: 'B00122YBXY', qty_ordered: 48, unit_price: 2.18, total_price: 104.64, supplier: 'amazon_business' },
+      { product_id: 'p15', product_name: 'Evian Water 16oz', machine_name: 'Regional Airport — Gate 14', upc: '096749982023', supplier_sku: 'B00EFYY6Q0', qty_ordered: 72, unit_price: 0.89, total_price: 64.08, supplier: 'amazon_business' },
+      { product_id: 'p5', product_name: 'Snickers Bar', machine_name: 'Transit Hub — Main Concourse', upc: '040000448328', supplier_sku: 'B000EVOSE4', qty_ordered: 60, unit_price: 0.75, total_price: 45.00, supplier: 'amazon_business' },
+    ],
+    order_total: 213.72,
+    supplier_order_id: 'AMZ-113-4829-20260520',
+    tracking_number: '1Z999AA10123456784',
+    estimated_delivery: '2026-05-24',
+    submitted_at: new Date(Date.now() - 19 * 24 * 60 * 60 * 1000).toISOString(),
+    created_at: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'ord-2',
+    user_id: 'demo-user',
+    supplier: 'amazon_business',
+    status: 'shipped',
+    line_items: [
+      { product_id: 'p10', product_name: 'Pepsi 20oz', machine_name: 'Business District — Exchange Tower', upc: '012000001215', supplier_sku: 'B07H55WKQK', qty_ordered: 36, unit_price: 0.94, total_price: 33.84, supplier: 'amazon_business' },
+      { product_id: 'p11', product_name: 'Cheetos Flamin Hot', machine_name: 'Business District — Exchange Tower', upc: '028400090858', supplier_sku: 'B07TQBBRXB', qty_ordered: 24, unit_price: 1.12, total_price: 26.88, supplier: 'amazon_business' },
+      { product_id: 'p9', product_name: 'Clif Bar Chocolate Chip', machine_name: 'Office Park — Break Room B4', upc: '722252114709', supplier_sku: 'B00121LTMO', qty_ordered: 30, unit_price: 1.38, total_price: 41.40, supplier: 'amazon_business' },
+    ],
+    order_total: 102.12,
+    supplier_order_id: 'AMZ-113-5201-20260601',
+    tracking_number: '1Z999AA10187654321',
+    estimated_delivery: '2026-06-10',
+    submitted_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    created_at: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'ord-3',
+    user_id: 'demo-user',
+    supplier: 'mixed',
+    status: 'draft',
+    line_items: [],
+    order_total: 0,
+    created_at: new Date().toISOString(),
+  },
+];
+
+export const mockSupplierIntegrations: SupplierIntegration[] = [
+  { id: 'si-1', user_id: 'demo-user', supplier_name: 'amazon_business', status: 'disconnected', created_at: new Date().toISOString() },
+  { id: 'si-2', user_id: 'demo-user', supplier_name: 'sysco', status: 'disconnected', created_at: new Date().toISOString() },
+  { id: 'si-3', user_id: 'demo-user', supplier_name: 'sams_club', status: 'disconnected', created_at: new Date().toISOString() },
+  { id: 'si-4', user_id: 'demo-user', supplier_name: 'manual', status: 'connected', created_at: new Date().toISOString() },
+];

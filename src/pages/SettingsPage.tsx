@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import { Check, Zap, Shield, CreditCard, User, Building2 } from 'lucide-react';
+import { Check, Zap, Shield, CreditCard, User, Building2, Loader2 } from 'lucide-react';
+import { toast } from 'sonner';
 import { useAuth } from '@/contexts/AuthContext';
+import { supabase, isDemoMode } from '@/lib/supabase';
 
 const plans = [
   {
@@ -37,25 +39,46 @@ const plans = [
 ];
 
 export default function SettingsPage() {
-  const { profile, subscription, isDemoMode } = useAuth();
+  const { profile, subscription } = useAuth();
   const [saving, setSaving] = useState(false);
+  const [upgrading, setUpgrading] = useState<string | null>(null);
   const [businessName, setBusinessName] = useState(profile?.business_name ?? '');
   const [saved, setSaved] = useState(false);
 
   const handleSave = async () => {
     setSaving(true);
-    await new Promise(r => setTimeout(r, 600));
+    if (!isDemoMode && supabase && profile) {
+      const { error } = await supabase.from('profiles').update({ business_name: businessName }).eq('id', profile.id);
+      if (error) { toast.error('Failed to save changes'); setSaving(false); return; }
+    }
     setSaving(false);
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
+    toast.success('Changes saved');
   };
 
-  const handleUpgrade = (plan: string) => {
+  const handleUpgrade = async (plan: string) => {
     if (isDemoMode) {
-      alert('Connect Supabase first to enable billing. See DEPLOYMENT.md for setup instructions.');
+      toast.info('Connect Supabase to enable billing. See DEPLOYMENT.md for setup.');
       return;
     }
-    alert(`Stripe checkout for ${plan} plan — integrate with your Stripe account (see DEPLOYMENT.md).`);
+    if (!supabase) return;
+    setUpgrading(plan);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      const res = await supabase.functions.invoke('create-checkout-session', {
+        body: { plan },
+        headers: session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {},
+      });
+      if (res.error) throw new Error(res.error.message);
+      const { url, error } = res.data as { url?: string; error?: string };
+      if (error) throw new Error(error);
+      if (url) window.location.href = url;
+    } catch (err) {
+      toast.error(String(err));
+    } finally {
+      setUpgrading(null);
+    }
   };
 
   return (
@@ -177,12 +200,14 @@ export default function SettingsPage() {
                   ))}
                 </div>
                 <button
-                  onClick={() => !isCurrent && handleUpgrade(plan.key)}
-                  disabled={isCurrent}
+                  onClick={() => !isCurrent && plan.key !== 'enterprise' && handleUpgrade(plan.key)}
+                  disabled={isCurrent || upgrading === plan.key}
                   className={isCurrent ? 'btn-secondary w-full' : 'btn-primary w-full'}
                   style={{ opacity: isCurrent ? 0.6 : 1, cursor: isCurrent ? 'default' : 'pointer' }}
                 >
-                  {isCurrent ? <><Check size={13} /> {plan.cta}</> : plan.cta}
+                  {isCurrent ? <><Check size={13} /> {plan.cta}</>
+                    : upgrading === plan.key ? <><Loader2 size={13} className="animate-spin" /> Redirecting…</>
+                    : plan.cta}
                 </button>
               </div>
             );
