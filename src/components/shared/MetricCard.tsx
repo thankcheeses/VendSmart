@@ -23,15 +23,12 @@ export default function MetricCard({ label, value, subtitle, change, accentColor
 
   return (
     <div className="glass-card flex flex-col justify-between min-h-[96px]">
-      <div className="flex items-start justify-between mb-2.5">
-        <span className="text-[11px] font-medium" style={{ color: 'var(--text-muted)', letterSpacing: '0.01em' }}>
+      <div className="flex items-start justify-between mb-3">
+        <span className="text-xs font-medium" style={{ color: 'var(--text-muted)' }}>
           {label}
         </span>
         {icon && (
-          <span
-            className="flex items-center justify-center rounded-lg"
-            style={{ width: 28, height: 28, background: `${accent}18`, color: accent }}
-          >
+          <span style={{ color: accent, opacity: 0.7 }}>
             {icon}
           </span>
         )}
@@ -39,11 +36,11 @@ export default function MetricCard({ label, value, subtitle, change, accentColor
       <div className="text-[26px] font-semibold leading-none" style={{ color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
         {value}
       </div>
-      <div className="flex items-center justify-between mt-2.5">
+      <div className="flex items-center justify-between mt-3">
         <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>{subtitle}</span>
         {change !== 0 && (
           <span className="text-xs font-medium" style={{ color: isPositive ? 'var(--accent-green)' : 'var(--accent-red)' }}>
-            {isPositive ? '▴' : '▾'} {Math.abs(change)}%
+            {isPositive ? '+' : ''}{change}%
           </span>
         )}
       </div>

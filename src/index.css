@@ -4,21 +4,21 @@
 
 /* ── Design Tokens ─────────────────────────────────────────── */
 :root {
-  --radius: 0.625rem;
+  --radius: 0.5rem;
 
-  /* Backgrounds */
-  --bg-page: #09090F;
-  --bg-surface: #0D0D16;
-  --bg-elevated: #12121C;
+  /* Backgrounds — neutral near-black, no purple tint */
+  --bg-page: #0f1117;
+  --bg-surface: #13161d;
+  --bg-elevated: #1c2030;
 
   /* Text */
   --text-primary: #F1F5F9;
-  --text-secondary: #94A3B8;
-  --text-muted: #4E5A6E;
+  --text-secondary: #8B9EB3;
+  --text-muted: #4B5673;
 
   /* Borders */
-  --border-subtle: rgba(255, 255, 255, 0.07);
-  --border-medium: rgba(255, 255, 255, 0.12);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.13);
 
   /* Accents */
   --accent-blue: #3B82F6;
@@ -28,35 +28,35 @@
   --accent-cyan: #22D3EE;
 
   /* Shadcn tokens */
-  --background: 222 47% 4%;
+  --background: 220 20% 7%;
   --foreground: 210 40% 96%;
-  --card: 222 47% 6%;
+  --card: 220 20% 9%;
   --card-foreground: 210 40% 96%;
-  --popover: 222 47% 6%;
+  --popover: 220 20% 11%;
   --popover-foreground: 210 40% 96%;
-  --primary: 221 83% 59%;
+  --primary: 217 91% 60%;
   --primary-foreground: 210 40% 98%;
-  --secondary: 217 33% 17%;
+  --secondary: 220 16% 18%;
   --secondary-foreground: 210 40% 96%;
-  --muted: 217 33% 12%;
-  --muted-foreground: 215 16% 57%;
-  --accent: 217 33% 17%;
+  --muted: 220 16% 13%;
+  --muted-foreground: 215 16% 55%;
+  --accent: 220 16% 18%;
   --accent-foreground: 210 40% 96%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 210 40% 98%;
-  --border: 217 33% 17%;
-  --input: 217 33% 17%;
-  --ring: 221 83% 59%;
+  --border: 220 16% 18%;
+  --input: 220 16% 18%;
+  --ring: 217 91% 60%;
 
   /* Sidebar */
-  --sidebar-background: 222 47% 4%;
+  --sidebar-background: 220 20% 7%;
   --sidebar-foreground: 210 40% 96%;
-  --sidebar-primary: 221 83% 59%;
+  --sidebar-primary: 217 91% 60%;
   --sidebar-primary-foreground: 210 40% 98%;
-  --sidebar-accent: 217 33% 10%;
+  --sidebar-accent: 220 16% 11%;
   --sidebar-accent-foreground: 210 40% 96%;
-  --sidebar-border: 217 33% 14%;
-  --sidebar-ring: 221 83% 59%;
+  --sidebar-border: 220 16% 14%;
+  --sidebar-ring: 217 91% 60%;
 }
 
 /* ── Base ─────────────────────────────────────────────────── */
@@ -85,16 +85,15 @@ input, select, textarea, button {
   .glass-card {
     background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 1rem 1.125rem;
   }
 
   .glass-elevated {
     background: var(--bg-elevated);
     border: 1px solid var(--border-medium);
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 1rem 1.125rem;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
   }
 
   /* ── Buttons ─────────────────────────────────────────────── */
@@ -106,25 +105,21 @@ input, select, textarea, button {
     padding: 0.4375rem 0.875rem;
     font-size: 13px;
     font-weight: 500;
-    border-radius: 8px;
-    background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+    border-radius: 6px;
+    background: #3B82F6;
     color: #fff;
     border: none;
     cursor: pointer;
-    transition: opacity 0.15s, transform 0.1s, box-shadow 0.15s;
-    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+    transition: opacity 0.12s;
     white-space: nowrap;
   }
 
   .btn-primary:hover {
-    opacity: 0.92;
-    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
-    transform: translateY(-1px);
+    opacity: 0.85;
   }
 
   .btn-primary:active {
-    transform: translateY(0);
-    opacity: 1;
+    opacity: 0.95;
   }
 
   .btn-secondary {
@@ -135,19 +130,18 @@ input, select, textarea, button {
     padding: 0.4375rem 0.875rem;
     font-size: 13px;
     font-weight: 500;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.06);
+    border-radius: 6px;
+    background: transparent;
     color: var(--text-secondary);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border-medium);
     cursor: pointer;
-    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    transition: background 0.12s, color 0.12s;
     white-space: nowrap;
   }
 
   .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.06);
     color: var(--text-primary);
-    border-color: var(--border-medium);
   }
 
   /* ── Status Badges ───────────────────────────────────────── */
@@ -256,12 +250,9 @@ input, select, textarea, button {
   }
 }
 
-/* ── Auth pages gradient background ─────────────────────────── */
+/* ── Auth pages background ───────────────────────────────────── */
 .auth-bg {
-  background:
-    radial-gradient(ellipse 120% 80% at 50% -10%, rgba(59, 130, 246, 0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 80% 80%, rgba(34, 211, 238, 0.06) 0%, transparent 50%),
-    var(--bg-page);
+  background: var(--bg-page);
   min-height: 100vh;
 }
 
@@ -302,10 +293,7 @@ input:-webkit-autofill:focus {
   transition: background-color 5000s ease-in-out 0s;
 }
 
-/* ── Gradient text helper ────────────────────────────────────── */
+/* ── Accent text helper ──────────────────────────────────────── */
 .gradient-text {
-  background: linear-gradient(135deg, #60A5FA 0%, #22D3EE 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--accent-blue);
 }

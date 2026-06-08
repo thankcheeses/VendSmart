@@ -170,14 +170,14 @@ export default function SettingsPage() {
                 key={plan.key}
                 className="glass-card relative flex flex-col"
                 style={{
-                  border: plan.highlight ? `1px solid rgba(59,130,246,0.3)` : '1px solid var(--border-subtle)',
-                  background: plan.highlight ? 'linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(12,12,22,0.95) 100%)' : undefined,
+                  border: plan.highlight ? `1px solid rgba(59,130,246,0.25)` : '1px solid var(--border-subtle)',
+                  background: plan.highlight ? 'rgba(59,130,246,0.06)' : undefined,
                 }}
               >
                 {plan.highlight && (
                   <div
                     className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-semibold px-3 py-1 rounded-full"
-                    style={{ background: 'linear-gradient(135deg, #3B82F6, #22D3EE)', color: 'white' }}
+                    style={{ background: '#2563EB', color: 'white' }}
                   >
                     Most Popular
                   </div>

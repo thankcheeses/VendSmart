@@ -9,8 +9,8 @@ export default function DemoBanner() {
     <div
       className="flex items-center gap-3 px-4 py-2.5 text-sm"
       style={{
-        background: 'linear-gradient(90deg, rgba(59,130,246,0.12) 0%, rgba(34,211,238,0.08) 100%)',
-        borderBottom: '1px solid rgba(59,130,246,0.2)',
+        background: 'rgba(59,130,246,0.08)',
+        borderBottom: '1px solid rgba(59,130,246,0.15)',
       }}
     >
       <Info size={15} style={{ color: 'var(--accent-blue)', flexShrink: 0 }} />
