@@ -226,10 +226,11 @@ export default function FleetOverview() {
               <thead>
                 <tr
                   style={{
-                    background: 'rgba(15, 15, 22, 0.95)',
+                    background: 'rgba(248, 250, 252, 0.95)',
                     backdropFilter: 'blur(8px)',
                   }}
                 >
+                  <th className="text-left px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wider">Image</th>
                   {[
                     { key: 'name' as SortKey, label: 'Machine Name' },
                     { key: 'location' as SortKey, label: 'Location' },
@@ -253,6 +254,7 @@ export default function FleetOverview() {
               <tbody>
                 {filteredAndSorted.map((machine) => {
                   const isSelected = selectedMachine?.id === machine.id;
+                  const imageId = (parseInt(machine.id) % 50) + 1000; // nice vending pics
                   return (
                     <tr
                       key={machine.id}
@@ -261,7 +263,7 @@ export default function FleetOverview() {
                       style={{
                         height: 52,
                         background: isSelected
-                          ? 'rgba(59, 130, 246, 0.1)'
+                          ? 'rgba(20, 184, 166, 0.1)'
                           : undefined,
                         borderLeft: isSelected
                           ? '2px solid var(--accent-blue)'
@@ -269,6 +271,13 @@ export default function FleetOverview() {
                         borderBottom: '1px solid var(--border-subtle)',
                       }}
                     >
+                      <td className="px-3">
+                        <img 
+                          src={`https://picsum.photos/id/${imageId}/48/48`} 
+                          alt={machine.name}
+                          className="w-10 h-10 object-cover rounded-xl shadow-sm border border-slate-200"
+                        />
+                      </td>
                       <td
                         className="px-3 text-[13px] font-medium"
                         style={{ color: 'var(--text-primary)' }}
