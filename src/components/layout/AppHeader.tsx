@@ -20,6 +20,7 @@ const navItems = [
   { key: 'alerts', label: 'Alerts' },
   { key: 'restock', label: 'Map' },
   { key: 'orders', label: 'Orders' },
+  { key: 'fill-run', label: 'Fill Run' },
 ];
 
 const adminNavItem = { key: 'admin', label: 'Admin' };

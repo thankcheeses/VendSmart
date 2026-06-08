@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { useState, useMemo, useEffect } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Navigation, Wrench, ArrowUpDown } from 'lucide-react';
@@ -29,6 +29,20 @@ const markerColors: Record<string, string> = {
   offline: '#64748B',
 };
 
+function FitBoundsToMachines({ positions }: { positions: [number, number][] }) {
+  const map = useMap();
+  useEffect(() => {
+    if (positions.length === 0) return;
+    if (positions.length === 1) {
+      map.setView(positions[0], 13);
+      return;
+    }
+    const bounds = L.latLngBounds(positions);
+    map.fitBounds(bounds, { padding: [40, 40] });
+  }, [map, positions]);
+  return null;
+}
+
 export default function RestockMapPage() {
   const { machines } = useMachines();
   const [sortBy, setSortBy] = useState<'urgency' | 'revenue'>('urgency');
@@ -42,7 +56,6 @@ export default function RestockMapPage() {
   }, [machines, sortBy]);
 
   const machinesNeedingRestock = machines.filter(m => m.status === 'critical' || m.status === 'low_stock' || m.status === 'offline');
-  const nycCenter: [number, number] = [40.73, -73.95];
 
   return (
     <div className="flex gap-5" style={{ height: 'calc(100vh - 140px)' }}>
@@ -109,11 +122,12 @@ export default function RestockMapPage() {
       </div>
 
       <div className="flex-1 glass-card p-0 overflow-hidden">
-        <MapContainer center={nycCenter} zoom={12} style={{ height: '100%', width: '100%', background: '#0a0a12' }} zoomControl={false}>
+        <MapContainer center={[20, 0]} zoom={2} style={{ height: '100%', width: '100%', background: '#0a0a12' }} zoomControl={false}>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
           />
+          <FitBoundsToMachines positions={machines.map(m => [m.latitude, m.longitude])} />
           {machines.map(machine => (
             <Marker
               key={machine.id}

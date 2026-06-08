@@ -17,6 +17,7 @@ import RestockMapPage from '@/pages/RestockMapPage';
 import RestockOrderPage from '@/pages/RestockOrderPage';
 import SettingsPage from '@/pages/SettingsPage';
 import AdminPage from '@/pages/AdminPage';
+import FillRunPage from '@/pages/FillRunPage';
 import LoginPage from '@/pages/LoginPage';
 import SignupPage from '@/pages/SignupPage';
 
@@ -33,6 +34,7 @@ const navToPath: Record<string, string> = {
   orders: '/orders',
   settings: '/settings',
   admin: '/admin',
+  'fill-run': '/fill-run',
 };
 
 const pathToNav: Record<string, string> = Object.fromEntries(
@@ -91,6 +93,7 @@ function DashboardShell() {
             <Route path="/orders" element={<RestockOrderPage />} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/admin" element={<AdminPage />} />
+            <Route path="/fill-run" element={<FillRunPage />} />
           </Routes>
         </main>
       </div>
