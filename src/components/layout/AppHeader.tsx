@@ -271,7 +271,7 @@ export default function AppHeader({ activeNav, onNavChange, alertCount = 0, aler
           >
             <div
               className="flex items-center justify-center rounded-full text-[11px] font-semibold"
-              style={{ width: 26, height: 26, background: '#2563EB', color: 'white' }}
+              style={{ width: 26, height: 26, background: '#00d4c8', color: '#0f1117' }}
             >
               {initials}
             </div>

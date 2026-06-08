@@ -32,7 +32,7 @@ const plans = [
     period: '/month',
     limit: 'Up to 100 machines',
     features: ['Up to 100 machines', 'Supplier integrations', 'PDF reports', 'Priority support', 'Custom alerts', 'Multi-user access'],
-    color: '#8B5CF6',
+    color: '#00d4c8',
     cta: 'Upgrade to Pro',
     highlight: true,
   },
@@ -181,14 +181,14 @@ export default function SettingsPage() {
                 key={plan.key}
                 className="glass-card relative flex flex-col"
                 style={{
-                  border: plan.highlight ? `1px solid rgba(139,92,246,0.25)` : '1px solid var(--border-subtle)',
-                  background: plan.highlight ? 'rgba(139,92,246,0.05)' : undefined,
+                  border: plan.highlight ? `1px solid rgba(0,212,200,0.25)` : '1px solid var(--border-subtle)',
+                  background: plan.highlight ? 'rgba(0,212,200,0.05)' : undefined,
                 }}
               >
                 {plan.highlight && (
                   <div
                     className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-semibold px-3 py-1 rounded-full"
-                    style={{ background: '#7C3AED', color: 'white' }}
+                    style={{ background: '#00d4c8', color: '#0f1117' }}
                   >
                     Most Popular
                   </div>
