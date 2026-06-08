@@ -4,8 +4,8 @@ export const machines: Machine[] = [
   {
     id: 'm1',
     user_id: 'demo-user',
-    name: 'Midtown Office Hub #1',
-    location_address: '350 Fifth Ave, New York, NY 10118',
+    name: 'Corporate Center — Main Lobby',
+    location_address: '550 Corporate Parkway, Building A',
     latitude: 40.7484,
     longitude: -73.9967,
     machine_type: 'combo',
@@ -20,8 +20,8 @@ export const machines: Machine[] = [
   {
     id: 'm2',
     user_id: 'demo-user',
-    name: 'Penn Station Concourse',
-    location_address: '1 Penn Plaza, New York, NY 10119',
+    name: 'Transit Hub — Main Concourse',
+    location_address: '1 Central Station Plaza',
     latitude: 40.7506,
     longitude: -73.9935,
     machine_type: 'drink',
@@ -36,8 +36,8 @@ export const machines: Machine[] = [
   {
     id: 'm3',
     user_id: 'demo-user',
-    name: 'Times Square Lobby',
-    location_address: '1515 Broadway, New York, NY 10036',
+    name: 'Downtown Tower — Lobby Level',
+    location_address: '200 Downtown Boulevard, Tower 3',
     latitude: 40.7579,
     longitude: -73.9855,
     machine_type: 'drink',
@@ -52,8 +52,8 @@ export const machines: Machine[] = [
   {
     id: 'm4',
     user_id: 'demo-user',
-    name: 'Grand Central Snack Bar',
-    location_address: '89 E 42nd St, New York, NY 10017',
+    name: 'Office Park — Break Room B4',
+    location_address: '400 Innovation Drive, Suite 400',
     latitude: 40.7527,
     longitude: -73.9772,
     machine_type: 'snack',
@@ -68,8 +68,8 @@ export const machines: Machine[] = [
   {
     id: 'm5',
     user_id: 'demo-user',
-    name: 'Financial District Tower',
-    location_address: '28 Liberty St, New York, NY 10005',
+    name: 'Business District — Exchange Tower',
+    location_address: '88 Exchange Boulevard, Floor 12',
     latitude: 40.7075,
     longitude: -74.0113,
     machine_type: 'combo',
@@ -84,8 +84,8 @@ export const machines: Machine[] = [
   {
     id: 'm6',
     user_id: 'demo-user',
-    name: 'Brooklyn Bridge Plaza',
-    location_address: '1 Centre St, Brooklyn, NY 11201',
+    name: 'Waterfront Plaza — Level 1',
+    location_address: '1 Harbor Walk, Waterfront District',
     latitude: 40.7027,
     longitude: -73.9873,
     machine_type: 'snack',
@@ -100,8 +100,8 @@ export const machines: Machine[] = [
   {
     id: 'm7',
     user_id: 'demo-user',
-    name: 'JFK Terminal 4',
-    location_address: 'Terminal 4, JFK International Airport, NY',
+    name: 'International Airport — Terminal A',
+    location_address: 'Metro International Airport, Terminal A',
     latitude: 40.6441,
     longitude: -73.7817,
     machine_type: 'combo',
@@ -116,8 +116,8 @@ export const machines: Machine[] = [
   {
     id: 'm8',
     user_id: 'demo-user',
-    name: 'LaGuardia Gate C',
-    location_address: 'Gate C, LaGuardia Airport, NY 11371',
+    name: 'Regional Airport — Gate 14',
+    location_address: 'City Regional Airport, Concourse B',
     latitude: 40.7769,
     longitude: -73.8740,
     machine_type: 'drink',
@@ -132,8 +132,8 @@ export const machines: Machine[] = [
   {
     id: 'm9',
     user_id: 'demo-user',
-    name: 'Columbia University Wien',
-    location_address: '619 W 116th St, New York, NY 10027',
+    name: 'University — Student Union',
+    location_address: 'State University, Student Union Building',
     latitude: 40.8075,
     longitude: -73.9626,
     machine_type: 'snack',
@@ -148,8 +148,8 @@ export const machines: Machine[] = [
   {
     id: 'm10',
     user_id: 'demo-user',
-    name: 'Rockefeller Center B1',
-    location_address: '1 Rockefeller Plaza, New York, NY 10020',
+    name: 'Convention Center — Hall B',
+    location_address: 'Metro Convention Center, Hall B Level',
     latitude: 40.7587,
     longitude: -73.9787,
     machine_type: 'combo',
@@ -164,8 +164,8 @@ export const machines: Machine[] = [
   {
     id: 'm11',
     user_id: 'demo-user',
-    name: 'Wall Street Metro Station',
-    location_address: 'Wall St Station, New York, NY 10005',
+    name: 'Metro Station — Platform Level',
+    location_address: 'Central Metro Station, Platform B',
     latitude: 40.7074,
     longitude: -74.0113,
     machine_type: 'drink',
@@ -180,8 +180,8 @@ export const machines: Machine[] = [
   {
     id: 'm12',
     user_id: 'demo-user',
-    name: 'Upper East Side Fitness',
-    location_address: '1187 Lexington Ave, New York, NY 10028',
+    name: 'Fitness Club — Member Floor',
+    location_address: '840 Athletic Way, Fitness Campus',
     latitude: 40.7773,
     longitude: -73.9556,
     machine_type: 'snack',
@@ -199,7 +199,7 @@ export const alerts: MachineAlert[] = [
   {
     id: 'a1',
     machine_id: 'm2',
-    machine_name: 'Penn Station Concourse',
+    machine_name: 'Transit Hub — Main Concourse',
     alert_type: 'low_stock',
     severity: 'critical',
     message: 'Fill level at 12% — estimated sell-out in under 24 hours. Immediate restock required.',
@@ -209,7 +209,7 @@ export const alerts: MachineAlert[] = [
   {
     id: 'a2',
     machine_id: 'm8',
-    machine_name: 'LaGuardia Gate C',
+    machine_name: 'Regional Airport — Gate 14',
     alert_type: 'low_stock',
     severity: 'critical',
     message: 'Critical stock level at 8%. High-traffic airport location losing an estimated $90/day.',
@@ -219,7 +219,7 @@ export const alerts: MachineAlert[] = [
   {
     id: 'a3',
     machine_id: 'm11',
-    machine_name: 'Wall Street Metro Station',
+    machine_name: 'Metro Station — Platform Level',
     alert_type: 'machine_offline',
     severity: 'critical',
     message: 'Machine is offline — no heartbeat in 13 days. Power or network issue suspected.',
@@ -229,7 +229,7 @@ export const alerts: MachineAlert[] = [
   {
     id: 'a4',
     machine_id: 'm5',
-    machine_name: 'Financial District Tower',
+    machine_name: 'Business District — Exchange Tower',
     alert_type: 'low_stock',
     severity: 'warning',
     message: 'Stock at 31%. At current sales velocity, estimated 3 days until restock needed.',
@@ -239,17 +239,17 @@ export const alerts: MachineAlert[] = [
   {
     id: 'a5',
     machine_id: 'm9',
-    machine_name: 'Columbia University Wien',
+    machine_name: 'University — Student Union',
     alert_type: 'low_stock',
     severity: 'warning',
-    message: 'Stock at 38%. Recommend restock on next route through Upper Manhattan.',
+    message: 'Stock at 38%. Recommend restock on next route pass.',
     acknowledged: false,
     created_at: new Date(Date.now() - 10 * 60 * 60 * 1000).toISOString(),
   },
   {
     id: 'a6',
     machine_id: 'm7',
-    machine_name: 'JFK Terminal 4',
+    machine_name: 'International Airport — Terminal A',
     alert_type: 'maintenance_due',
     severity: 'info',
     message: 'Scheduled 90-day maintenance check due in 5 days. High-value location — plan accordingly.',
@@ -259,7 +259,7 @@ export const alerts: MachineAlert[] = [
   {
     id: 'a7',
     machine_id: 'm10',
-    machine_name: 'Rockefeller Center B1',
+    machine_name: 'Convention Center — Hall B',
     alert_type: 'revenue_drop',
     severity: 'warning',
     message: 'Revenue down 23% vs. last week. 55% fill rate may be suppressing sales.',
@@ -269,7 +269,7 @@ export const alerts: MachineAlert[] = [
   {
     id: 'a8',
     machine_id: 'm4',
-    machine_name: 'Grand Central Snack Bar',
+    machine_name: 'Office Park — Break Room B4',
     alert_type: 'low_stock',
     severity: 'warning',
     message: 'Stock at 62%. Trending down — consider scheduling a restock visit this week.',
@@ -279,7 +279,7 @@ export const alerts: MachineAlert[] = [
   {
     id: 'a9',
     machine_id: 'm3',
-    machine_name: 'Times Square Lobby',
+    machine_name: 'Downtown Tower — Lobby Level',
     alert_type: 'maintenance_due',
     severity: 'info',
     message: 'Bill acceptor flagged a jam. Clear jam or schedule technician visit.',
@@ -289,10 +289,10 @@ export const alerts: MachineAlert[] = [
   {
     id: 'a10',
     machine_id: 'm6',
-    machine_name: 'Brooklyn Bridge Plaza',
+    machine_name: 'Waterfront Plaza — Level 1',
     alert_type: 'revenue_drop',
     severity: 'info',
-    message: 'Revenue dip noted on weekends. Consider adjusting product mix for tourist foot traffic.',
+    message: 'Revenue dip noted on weekends. Consider adjusting product mix for the location.',
     acknowledged: true,
     created_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
   },
@@ -330,7 +330,7 @@ export const productPerformance: Product[] = [
   { product_id: 'p6', product_name: 'Dasani Water 20oz', category: 'Beverage', machine_id: 'm3', units_sold_7d: 198, revenue_7d: 277.20, stock_remaining: 45 },
   { product_id: 'p7', product_name: 'Doritos Nacho Cheese', category: 'Snack', machine_id: 'm3', units_sold_7d: 134, revenue_7d: 195.26, stock_remaining: 30 },
   { product_id: 'p8', product_name: 'Vitamin Water XXX', category: 'Beverage', machine_id: 'm4', units_sold_7d: 43, revenue_7d: 90.30, stock_remaining: 18 },
-  { product_id: 'p9', product_name: 'Cliff Bar Chocolate Chip', category: 'Bar', machine_id: 'm4', units_sold_7d: 38, revenue_7d: 87.40, stock_remaining: 14 },
+  { product_id: 'p9', product_name: 'Clif Bar Chocolate Chip', category: 'Bar', machine_id: 'm4', units_sold_7d: 38, revenue_7d: 87.40, stock_remaining: 14 },
   { product_id: 'p10', product_name: 'Pepsi 20oz', category: 'Beverage', machine_id: 'm5', units_sold_7d: 67, revenue_7d: 100.50, stock_remaining: 9 },
   { product_id: 'p11', product_name: 'Cheetos Flamin Hot', category: 'Snack', machine_id: 'm5', units_sold_7d: 29, revenue_7d: 43.21, stock_remaining: 11 },
   { product_id: 'p12', product_name: 'Sprite 20oz', category: 'Beverage', machine_id: 'm6', units_sold_7d: 89, revenue_7d: 124.60, stock_remaining: 24 },
@@ -357,7 +357,7 @@ for (const [id, machine] of Object.entries(machineProductMap)) {
   if (!machine.length) {
     machineProductMap[id] = [
       { product_id: `p-${id}-1`, product_name: 'Coca-Cola 20oz', category: 'Beverage', machine_id: id, units_sold_7d: 72, revenue_7d: 108.00, stock_remaining: 18 },
-      { product_id: `p-${id}-2`, product_name: 'Lay\'s Classic', category: 'Snack', machine_id: id, units_sold_7d: 54, revenue_7d: 81.00, stock_remaining: 14 },
+      { product_id: `p-${id}-2`, product_name: "Lay's Classic", category: 'Snack', machine_id: id, units_sold_7d: 54, revenue_7d: 81.00, stock_remaining: 14 },
     ];
   }
 }
@@ -392,6 +392,6 @@ export const dashboardMetrics: DashboardMetrics = {
 
 export const currentUser = {
   id: 'demo-user',
-  business_name: 'VendSmart Demo',
+  business_name: 'Demo Operator',
   email: 'demo@vendsmart.app',
 };

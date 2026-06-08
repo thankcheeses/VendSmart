@@ -46,7 +46,7 @@ function DashboardShell() {
   const navigate = useNavigate();
   const location = useLocation();
   const { machines } = useMachines();
-  const { alerts } = useAlerts();
+  const { alerts, acknowledgeAlert } = useAlerts();
   const metrics = useDashboardMetrics(machines, alerts);
   const { subscription } = useAuth();
 
@@ -61,7 +61,13 @@ function DashboardShell() {
     <div style={{ background: 'var(--bg-page)', minHeight: '100vh' }}>
       {isDemoMode && <DemoBanner />}
       {subscription && <UpgradeBanner machineCount={machines.length} machineLimit={subscription.machine_limit} />}
-      <AppHeader activeNav={activeNav} onNavChange={handleNavChange} alertCount={unackAlerts} />
+      <AppHeader
+        activeNav={activeNav}
+        onNavChange={handleNavChange}
+        alertCount={unackAlerts}
+        alerts={alerts}
+        onAcknowledgeAlert={acknowledgeAlert}
+      />
 
       <div
         style={{
