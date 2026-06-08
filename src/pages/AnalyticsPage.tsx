@@ -16,7 +16,7 @@ export default function AnalyticsPage() {
   const topProducts = [...productPerformance].sort((a, b) => b.revenue_7d - a.revenue_7d);
   const underperforming = productPerformance.filter(p => p.units_sold_7d < 45);
 
-  const tooltipStyle = { background: 'rgba(15,15,22,0.95)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 8, backdropFilter: 'blur(12px)' };
+  const tooltipStyle = { background: 'var(--bg-elevated)', border: '1px solid var(--border-medium)', borderRadius: 6 };
 
   return (
     <div className="space-y-5">
@@ -147,7 +147,7 @@ export default function AnalyticsPage() {
             ].map(({ value, label, color }) => (
               <div key={label} className="glass-card text-center py-6">
                 <div className="text-3xl font-bold" style={{ color }}>{value}</div>
-                <div className="text-xs font-medium uppercase tracking-wider mt-1" style={{ color: 'var(--text-muted)' }}>{label}</div>
+                <div className="text-xs font-medium font-medium mt-1" style={{ color: 'var(--text-muted)' }}>{label}</div>
               </div>
             ))}
           </div>

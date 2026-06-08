@@ -22,6 +22,8 @@ const navItems = [
   { key: 'orders', label: 'Orders' },
 ];
 
+const adminNavItem = { key: 'admin', label: 'Admin' };
+
 function timeAgo(dateStr: string): string {
   const diff = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
   if (diff < 60) return 'just now';
@@ -34,10 +36,10 @@ const panelBase: React.CSSProperties = {
   position: 'absolute',
   right: 0,
   top: 'calc(100% + 8px)',
-  background: '#12121C',
-  border: '1px solid rgba(255,255,255,0.09)',
-  borderRadius: 12,
-  boxShadow: '0 16px 48px rgba(0,0,0,0.55)',
+  background: 'var(--bg-elevated)',
+  border: '1px solid var(--border-medium)',
+  borderRadius: 8,
+  boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
   zIndex: 200,
   overflow: 'hidden',
 };
@@ -105,7 +107,7 @@ export default function AppHeader({ activeNav, onNavChange, alertCount = 0, aler
 
       {/* Nav */}
       <nav className="hidden md:flex items-center">
-        {navItems.map(item => {
+        {[...navItems, ...(profile?.is_super_admin || isDemoMode ? [adminNavItem] : [])].map(item => {
           const isActive = activeNav === item.key;
           return (
             <button
@@ -269,7 +271,7 @@ export default function AppHeader({ activeNav, onNavChange, alertCount = 0, aler
           >
             <div
               className="flex items-center justify-center rounded-full text-[11px] font-semibold"
-              style={{ width: 26, height: 26, background: 'linear-gradient(135deg, #3B82F6 0%, #22D3EE 100%)', color: 'white' }}
+              style={{ width: 26, height: 26, background: '#2563EB', color: 'white' }}
             >
               {initials}
             </div>

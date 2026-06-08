@@ -70,18 +70,21 @@ export default function FleetOverview() {
       </div>
 
       {alertBannerVisible && criticalAlerts.length > 0 && (
-        <div className="glass-elevated flex items-start gap-3 px-4 py-3" style={{ borderLeft: '3px solid var(--accent-amber)' }}>
-          <AlertTriangle size={18} style={{ color: 'var(--accent-amber)', marginTop: 1, flexShrink: 0 }} />
+        <div
+          className="flex items-start gap-3 px-4 py-3 rounded-lg"
+          style={{ background: 'rgba(245,158,11,0.07)', border: '1px solid rgba(245,158,11,0.18)' }}
+        >
+          <AlertTriangle size={15} style={{ color: 'var(--accent-amber)', marginTop: 1, flexShrink: 0 }} />
           <div className="flex-1">
             <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
               <span className="font-medium" style={{ color: 'var(--text-primary)' }}>
                 {criticalAlerts.filter(a => a.severity === 'critical').length} machines
               </span>{' '}
-              in your fleet have critically low stock.{' '}
+              have critically low stock.{' '}
               {criticalAlerts.filter(a => a.severity === 'warning').length > 0 && `${criticalAlerts.filter(a => a.severity === 'warning').length} more need attention soon.`}
             </p>
           </div>
-          <button onClick={() => setAlertBannerVisible(false)} style={{ color: 'var(--text-muted)' }}><X size={16} /></button>
+          <button onClick={() => setAlertBannerVisible(false)} style={{ color: 'var(--text-muted)' }}><X size={14} /></button>
         </div>
       )}
 
@@ -118,19 +121,19 @@ export default function FleetOverview() {
           <div className="overflow-x-auto scrollbar-thin">
             <table className="w-full">
               <thead>
-                <tr style={{ background: 'rgba(15,15,22,0.95)', backdropFilter: 'blur(8px)' }}>
+                <tr style={{ background: 'var(--bg-elevated)', borderBottom: '1px solid var(--border-subtle)' }}>
                   {[
-                    { key: 'name' as SortKey, label: 'Machine Name' },
+                    { key: 'name' as SortKey, label: 'Machine' },
                     { key: 'location' as SortKey, label: 'Location' },
                     { key: 'status' as SortKey, label: 'Status' },
-                    { key: 'fill_percentage' as SortKey, label: 'Fill %' },
+                    { key: 'fill_percentage' as SortKey, label: 'Fill' },
                     { key: 'weekly_revenue' as SortKey, label: 'Revenue (7d)' },
-                    { key: 'last_visit_date' as SortKey, label: 'Last Visit' },
+                    { key: 'last_visit_date' as SortKey, label: 'Last visit' },
                   ].map(col => (
                     <th
                       key={col.key}
                       onClick={() => handleSort(col.key)}
-                      className="text-left px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wider cursor-pointer select-none whitespace-nowrap"
+                      className="text-left px-3 py-2.5 text-[11px] font-medium cursor-pointer select-none whitespace-nowrap"
                       style={{ color: 'var(--text-muted)' }}
                     >
                       {col.label}<SortIcon col={col.key} />

@@ -61,7 +61,7 @@ export default function AlertsPage() {
         ].map(s => (
           <div key={s.label} className="glass-card text-center py-4">
             <div className="text-2xl font-bold" style={{ color: s.color }}>{s.value}</div>
-            <div className="text-xs font-medium uppercase tracking-wider mt-1" style={{ color: 'var(--text-muted)' }}>{s.label}</div>
+            <div className="text-xs font-medium font-medium mt-1" style={{ color: 'var(--text-muted)' }}>{s.label}</div>
           </div>
         ))}
       </div>
@@ -88,7 +88,7 @@ export default function AlertsPage() {
           <div key={date}>
             <div className="flex items-center gap-2 mb-3" style={{ color: 'var(--text-muted)' }}>
               <Calendar size={13} />
-              <span className="text-xs font-semibold uppercase tracking-wider">{getDateGroupLabel(date)}</span>
+              <span className="text-xs font-semibold font-medium">{getDateGroupLabel(date)}</span>
             </div>
             <div className="space-y-2">
               {dateAlerts.map(alert => {

@@ -30,18 +30,18 @@ export default function MachineDetailPanel({ machine }: MachineDetailPanelProps)
         ].map(({ value, label }) => (
           <div key={label} className="text-center">
             <div className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>{value}</div>
-            <div className="text-xs font-medium uppercase tracking-wider mt-0.5" style={{ color: 'var(--text-muted)' }}>{label}</div>
+            <div className="text-xs font-medium font-medium mt-0.5" style={{ color: 'var(--text-muted)' }}>{label}</div>
           </div>
         ))}
       </div>
 
       <div>
-        <div className="text-xs font-medium uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)' }}>7-Day Revenue Trend</div>
+        <div className="text-xs font-medium font-medium mb-2" style={{ color: 'var(--text-muted)' }}>7-Day Revenue Trend</div>
         <Sparkline data={sparklineData} width={220} height={40} color="#22D3EE" />
       </div>
 
       <div>
-        <div className="text-xs font-medium uppercase tracking-wider mb-3" style={{ color: 'var(--text-muted)' }}>Product Stock</div>
+        <div className="text-xs font-medium font-medium mb-3" style={{ color: 'var(--text-muted)' }}>Product Stock</div>
         <div className="space-y-3">
           {products.slice(0, 5).map((p) => (
             <div key={p.product_id}>

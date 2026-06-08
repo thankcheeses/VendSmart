@@ -17,8 +17,8 @@ export default function UpgradeBanner({ machineCount, machineLimit }: UpgradeBan
     <div
       className="flex items-center gap-3 px-4 py-2.5 text-sm"
       style={{
-        background: 'linear-gradient(90deg, rgba(245,158,11,0.12) 0%, rgba(239,68,68,0.08) 100%)',
-        borderBottom: '1px solid rgba(245,158,11,0.2)',
+        background: 'rgba(245,158,11,0.07)',
+        borderBottom: '1px solid rgba(245,158,11,0.15)',
       }}
     >
       <Zap size={15} style={{ color: 'var(--accent-amber)', flexShrink: 0 }} />

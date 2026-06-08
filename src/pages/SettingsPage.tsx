@@ -9,32 +9,42 @@ const plans = [
     key: 'free',
     name: 'Free',
     price: '$0',
-    period: 'forever',
-    limit: '5 machines',
-    features: ['Up to 5 machines', 'Real-time alerts', 'Revenue analytics', 'Restock map', 'AI predictions (basic)'],
+    period: '/month',
+    limit: 'Up to 5 machines',
+    features: ['Up to 5 machines', 'Real-time alerts', 'Revenue analytics', 'Restock map', 'Basic AI predictions'],
     color: '#64748B',
     cta: 'Current plan',
   },
   {
+    key: 'operator',
+    name: 'Operator',
+    price: '$29',
+    period: '/month',
+    limit: 'Up to 25 machines',
+    features: ['Up to 25 machines', 'Advanced AI restocking', 'Route optimization', 'CSV exports', 'Email support'],
+    color: '#3B82F6',
+    cta: 'Upgrade to Operator',
+  },
+  {
     key: 'pro',
     name: 'Pro',
-    price: '$49',
+    price: '$79',
     period: '/month',
-    limit: 'Unlimited machines',
-    features: ['Unlimited machines', 'Advanced AI restocking', 'Route optimization', 'CSV/PDF exports', 'Priority support', 'Custom alerts'],
-    color: '#3B82F6',
+    limit: 'Up to 100 machines',
+    features: ['Up to 100 machines', 'Supplier integrations', 'PDF reports', 'Priority support', 'Custom alerts', 'Multi-user access'],
+    color: '#8B5CF6',
     cta: 'Upgrade to Pro',
     highlight: true,
   },
   {
-    key: 'enterprise',
-    name: 'Enterprise',
-    price: 'Custom',
-    period: '',
-    limit: 'Custom',
-    features: ['Everything in Pro', 'White-label dashboard', 'Dedicated account manager', 'Custom integrations', 'SLA guarantees', 'SSO / SAML'],
+    key: 'business',
+    name: 'Business',
+    price: '$199',
+    period: '/month',
+    limit: 'Unlimited machines',
+    features: ['Unlimited machines', 'White-label dashboard', 'Dedicated account manager', 'API access', 'SLA guarantee', 'SSO / SAML'],
     color: '#22D3EE',
-    cta: 'Contact sales',
+    cta: 'Upgrade to Business',
   },
 ];
 
@@ -162,45 +172,46 @@ export default function SettingsPage() {
       {/* Plan cards */}
       <div>
         <h3 className="text-sm font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Plans</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
           {plans.map(plan => {
             const isCurrent = subscription?.plan === plan.key;
+            const planColor = plan.color;
             return (
               <div
                 key={plan.key}
                 className="glass-card relative flex flex-col"
                 style={{
-                  border: plan.highlight ? `1px solid rgba(59,130,246,0.3)` : '1px solid var(--border-subtle)',
-                  background: plan.highlight ? 'linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(12,12,22,0.95) 100%)' : undefined,
+                  border: plan.highlight ? `1px solid rgba(139,92,246,0.25)` : '1px solid var(--border-subtle)',
+                  background: plan.highlight ? 'rgba(139,92,246,0.05)' : undefined,
                 }}
               >
                 {plan.highlight && (
                   <div
                     className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-semibold px-3 py-1 rounded-full"
-                    style={{ background: 'linear-gradient(135deg, #3B82F6, #22D3EE)', color: 'white' }}
+                    style={{ background: '#7C3AED', color: 'white' }}
                   >
                     Most Popular
                   </div>
                 )}
                 <div className="flex items-center gap-2 mb-3">
-                  <CreditCard size={14} style={{ color: plan.color }} />
+                  <CreditCard size={14} style={{ color: planColor }} />
                   <span className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>{plan.name}</span>
                 </div>
                 <div className="mb-1">
                   <span className="text-3xl font-bold" style={{ color: 'var(--text-primary)' }}>{plan.price}</span>
                   <span className="text-sm" style={{ color: 'var(--text-muted)' }}>{plan.period}</span>
                 </div>
-                <div className="text-xs mb-4" style={{ color: plan.color }}>{plan.limit}</div>
+                <div className="text-xs mb-4" style={{ color: planColor }}>{plan.limit}</div>
                 <div className="space-y-2 flex-1 mb-5">
                   {plan.features.map(f => (
                     <div key={f} className="flex items-center gap-2">
-                      <Check size={12} style={{ color: plan.color, flexShrink: 0 }} />
+                      <Check size={12} style={{ color: planColor, flexShrink: 0 }} />
                       <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>{f}</span>
                     </div>
                   ))}
                 </div>
                 <button
-                  onClick={() => !isCurrent && plan.key !== 'enterprise' && handleUpgrade(plan.key)}
+                  onClick={() => !isCurrent && handleUpgrade(plan.key)}
                   disabled={isCurrent || upgrading === plan.key}
                   className={isCurrent ? 'btn-secondary w-full' : 'btn-primary w-full'}
                   style={{ opacity: isCurrent ? 0.6 : 1, cursor: isCurrent ? 'default' : 'pointer' }}
