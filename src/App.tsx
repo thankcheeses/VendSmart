@@ -133,9 +133,16 @@ function AppRoutes() {
   );
 }
 
+// Vite's BASE_URL is '/VendSmart/' on GitHub Pages and './' for local dev and
+// Capacitor builds. React Router only understands absolute path prefixes, so
+// anything relative collapses to the root.
+const routerBasename = import.meta.env.BASE_URL.startsWith('/')
+  ? import.meta.env.BASE_URL.replace(/\/$/, '') || '/'
+  : '/';
+
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={routerBasename}>
       <AuthProvider>
         <AppRoutes />
       </AuthProvider>
