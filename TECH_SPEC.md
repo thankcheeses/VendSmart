@@ -19,7 +19,7 @@ VendSmart is a production SaaS for vending machine fleet management. Operators t
 | Backend | Supabase (Postgres + Auth + Realtime + Edge Functions) |
 | Billing | Stripe (Checkout Sessions + webhooks) |
 | Mobile | Capacitor 8 (iOS + Android, wrapping the web app) |
-| Deployment | Vercel (free tier, `vend-smart.vercel.app`) |
+| Deployment | GitHub Pages (GitHub Actions workflow, `thankcheeses.github.io/VendSmart/`) |
 | Notifications | Resend (transactional email — planned) |
 
 ---
@@ -42,7 +42,8 @@ VendSmart is a production SaaS for vending machine fleet management. Operators t
 │   ├── functions/       # Deno Edge Functions
 │   └── seed.sql         # Development seed data
 ├── capacitor.config.ts  # Capacitor native app config
-└── vercel.json          # Deployment config + security headers
+└── .github/workflows/
+    └── deploy-pages.yml # GitHub Pages build + publish
 ```
 
 ---
@@ -57,7 +58,7 @@ When `VITE_SUPABASE_URL` is unset or a placeholder, `isDemoMode = true`. In demo
 - The Admin panel is accessible (useful for showcasing features)
 - All write operations (add machine, acknowledge alert, submit fill run) update React state only — no persistence
 
-This lets anyone evaluate the full product at `vend-smart.vercel.app` with zero setup.
+This lets anyone evaluate the full product at `thankcheeses.github.io/VendSmart/` with zero setup.
 
 ---
 
@@ -210,7 +211,7 @@ npx cap open android   # Open Android Studio
 | Demo account charges | `prevent_demo_account_orders` DB trigger blocks non-draft orders from demo account |
 | Admin access | `is_super_admin` flag + RLS bypass policy. Frontend gating is defense-in-depth only. |
 | Impersonation | Requires `audit_logs` INSERT (DB trigger). Time-limited (1 hour). |
-| XSS | CSP in `vercel.json` allows only self + specific CDNs. No `unsafe-eval`. |
+| XSS | CSP `<meta>` tag in `index.html` allows only self + specific CDNs. No `unsafe-eval`. |
 | Clickjacking | `X-Frame-Options: DENY` |
 | CSRF | Supabase JWT auth — no cookie-based sessions |
 | SQL injection | All queries use Supabase SDK parameterized calls. No raw SQL in app code. |
@@ -224,7 +225,7 @@ npx cap open android   # Open Android Studio
 - **Page background:** `#0f1117`
 - **Surface:** `#161b22`
 - **Elevated surface:** `#1c2128`
-- **Aesthetic:** Linear/Vercel — flat, no gradients, no glassmorphism, no `uppercase tracking-wider` labels
+- **Aesthetic:** Linear — flat, no gradients, no glassmorphism, no `uppercase tracking-wider` labels
 
 ---
 
@@ -250,7 +251,7 @@ Single codebase. The web app already works well on mobile screens. Capacitor let
 VendSmart is a B2B SaaS tool for operators, not a consumer app selling content. Apple's own guidelines allow web-based payments for B2B SaaS. Stripe checkout avoids the 15–30% platform cut on every subscription.
 
 **Why Edge Functions for billing/webhooks?**
-Stripe secret keys must never reach the browser. Vercel serverless functions would also work, but Supabase Edge Functions co-locate with the database and are already part of the stack.
+Stripe secret keys must never reach the browser. GitHub Pages is static-only and has no server side at all, so Supabase Edge Functions handle every secret-bearing call — they also co-locate with the database and are already part of the stack.
 
 **Why `(SELECT auth.uid())` in RLS policies?**
 Prevents Postgres from re-evaluating `auth.uid()` for every row in a table scan. The `SELECT` wrapper allows the query planner to treat it as a stable subquery, significantly improving performance on large tables.

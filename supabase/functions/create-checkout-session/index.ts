@@ -4,7 +4,7 @@
 //
 // Required env vars:
 //   STRIPE_SECRET_KEY  (sk_live_... or sk_test_...)
-//   VITE_APP_URL       (https://your-app.vercel.app — used for success/cancel redirects)
+//   VITE_APP_URL       (https://your-username.github.io/VendSmart/ — used for success/cancel redirects)
 
 import Stripe from 'https://esm.sh/stripe@14?target=deno';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
