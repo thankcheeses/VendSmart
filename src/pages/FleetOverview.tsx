@@ -24,12 +24,8 @@ export default function FleetOverview() {
   const [showFilter, setShowFilter] = useState(false);
   const [alertBannerVisible, setAlertBannerVisible] = useState(true);
 
-  // Auto-select first machine once data loads
-  useMemo(() => {
-    if (machines.length > 0 && !selectedMachine) {
-      setSelectedMachine(machines[0]);
-    }
-  }, [machines, selectedMachine]);
+  // Until a row is picked, show the first machine once data loads
+  const activeMachine = selectedMachine ?? machines[0] ?? null;
 
   const handleSort = (key: SortKey) => {
     if (sortKey === key) setSortDir(d => d === 'asc' ? 'desc' : 'asc');
@@ -143,7 +139,7 @@ export default function FleetOverview() {
               </thead>
               <tbody>
                 {filteredAndSorted.map(machine => {
-                  const isSelected = selectedMachine?.id === machine.id;
+                  const isSelected = activeMachine?.id === machine.id;
                   return (
                     <tr
                       key={machine.id}
@@ -183,10 +179,10 @@ export default function FleetOverview() {
           )}
         </div>
 
-        {selectedMachine && (
+        {activeMachine && (
           <div className="hidden lg:block" style={{ width: 320, flexShrink: 0 }}>
             <div className="sticky" style={{ top: 80 }}>
-              <MachineDetailPanel machine={selectedMachine} />
+              <MachineDetailPanel machine={activeMachine} />
             </div>
           </div>
         )}

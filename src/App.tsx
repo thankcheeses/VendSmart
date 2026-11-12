@@ -41,6 +41,18 @@ const pathToNav: Record<string, string> = Object.fromEntries(
   Object.entries(navToPath).map(([k, v]) => [v, k])
 );
 
+const pageTitles: Record<string, string> = {
+  '/': 'Dashboard',
+  '/machines': 'Machines',
+  '/analytics': 'Analytics',
+  '/alerts': 'Alerts',
+  '/restock': 'Restock Map',
+  '/orders': 'Orders',
+  '/settings': 'Settings',
+  '/admin': 'Admin',
+  '/fill-run': 'Fill Run',
+};
+
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
   if (loading) return <div style={{ background: 'var(--bg-page)', minHeight: '100vh' }} />;
@@ -103,10 +115,8 @@ function AppRoutes() {
   const location = useLocation();
 
   useEffect(() => {
-    const title = document.title;
-    const nav = pathToNav[location.pathname];
-    if (nav) document.title = `${nav.charAt(0).toUpperCase() + nav.slice(1)} — VendSmart`;
-    else document.title = title;
+    const label = pageTitles[location.pathname];
+    document.title = label ? `${label} — VendSmart` : 'VendSmart';
   }, [location.pathname]);
 
   if (loading) return <div style={{ background: 'var(--bg-page)', minHeight: '100vh' }} />;

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Bell, LogOut, Settings, ChevronDown, AlertTriangle, X, CheckCheck, ArrowRight } from 'lucide-react';
+import { Bell, LogOut, Settings, ChevronDown, AlertTriangle, X, CheckCheck, ArrowRight, Menu } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import VendingMachineIcon from '@/components/shared/VendingMachineIcon';
 import { useAuth } from '@/contexts/AuthContext';
@@ -49,6 +49,8 @@ export default function AppHeader({ activeNav, onNavChange, alertCount = 0, aler
   const { profile, subscription, signOut, isDemoMode } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const notifRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
@@ -61,6 +63,7 @@ export default function AppHeader({ activeNav, onNavChange, alertCount = 0, aler
     const handler = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) setDropdownOpen(false);
       if (notifRef.current && !notifRef.current.contains(e.target as Node)) setNotifOpen(false);
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) setMenuOpen(false);
     };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
@@ -68,7 +71,7 @@ export default function AppHeader({ activeNav, onNavChange, alertCount = 0, aler
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') { setDropdownOpen(false); setNotifOpen(false); }
+      if (e.key === 'Escape') { setDropdownOpen(false); setNotifOpen(false); setMenuOpen(false); }
     };
     document.addEventListener('keydown', handler);
     return () => document.removeEventListener('keydown', handler);
@@ -78,6 +81,8 @@ export default function AppHeader({ activeNav, onNavChange, alertCount = 0, aler
     await signOut();
     navigate('/login');
   };
+
+  const visibleNavItems = [...navItems, ...(profile?.is_super_admin || isDemoMode ? [adminNavItem] : [])];
 
   return (
     <header
@@ -92,6 +97,45 @@ export default function AppHeader({ activeNav, onNavChange, alertCount = 0, aler
     >
       {/* Brand */}
       <div className="flex items-center gap-2.5">
+        {/* Mobile menu: the inline nav is hidden below md */}
+        <div className="relative md:hidden" ref={menuRef}>
+          <button
+            onClick={() => { setMenuOpen(v => !v); setNotifOpen(false); setDropdownOpen(false); }}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-nav"
+            className="p-2 -ml-2 rounded-md transition-colors"
+            style={{ color: 'var(--text-primary)', background: menuOpen ? 'var(--bg-elevated)' : 'transparent' }}
+          >
+            {menuOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
+          {menuOpen && (
+            <nav
+              id="mobile-nav"
+              aria-label="Main"
+              className="py-1"
+              style={{ ...panelBase, left: 0, right: 'auto', width: 200, boxShadow: '0 8px 32px rgba(15,23,42,0.18)' }}
+            >
+              {visibleNavItems.map(item => {
+                const isActive = activeNav === item.key;
+                return (
+                  <button
+                    key={item.key}
+                    onClick={() => { onNavChange(item.key); setMenuOpen(false); }}
+                    aria-current={isActive ? 'page' : undefined}
+                    className="w-full text-left px-4 py-2.5 text-[14px] font-medium"
+                    style={{
+                      color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+                      background: isActive ? 'var(--bg-surface)' : 'transparent',
+                    }}
+                  >
+                    {item.label}
+                  </button>
+                );
+              })}
+            </nav>
+          )}
+        </div>
         <VendingMachineIcon size={20} color="#3B82F6" />
         <span className="text-[15px] font-semibold" style={{ color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
           VendSmart
@@ -108,7 +152,7 @@ export default function AppHeader({ activeNav, onNavChange, alertCount = 0, aler
 
       {/* Nav */}
       <nav className="hidden md:flex items-center">
-        {[...navItems, ...(profile?.is_super_admin || isDemoMode ? [adminNavItem] : [])].map(item => {
+        {visibleNavItems.map(item => {
           const isActive = activeNav === item.key;
           return (
             <button
@@ -132,7 +176,7 @@ export default function AppHeader({ activeNav, onNavChange, alertCount = 0, aler
         {/* Notification bell */}
         <div className="relative" ref={notifRef}>
           <button
-            onClick={() => { setNotifOpen(v => !v); setDropdownOpen(false); }}
+            onClick={() => { setNotifOpen(v => !v); setDropdownOpen(false); setMenuOpen(false); }}
             aria-label={`Notifications${alertCount > 0 ? ` (${alertCount} unread)` : ''}`}
             aria-expanded={notifOpen}
             aria-haspopup="true"
@@ -266,7 +310,7 @@ export default function AppHeader({ activeNav, onNavChange, alertCount = 0, aler
         {/* User dropdown */}
         <div className="relative ml-1" ref={dropdownRef}>
           <button
-            onClick={() => { setDropdownOpen(v => !v); setNotifOpen(false); }}
+            onClick={() => { setDropdownOpen(v => !v); setNotifOpen(false); setMenuOpen(false); }}
             className="flex items-center gap-1.5 px-2 py-1.5 rounded-md transition-colors"
             style={{ background: dropdownOpen ? 'rgba(255,255,255,0.07)' : 'transparent' }}
           >
@@ -286,7 +330,7 @@ export default function AppHeader({ activeNav, onNavChange, alertCount = 0, aler
             <div style={{ ...panelBase, width: 200 }}>
               <div className="px-3 py-2.5" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
                 <div className="text-[13px] font-medium" style={{ color: 'var(--text-primary)' }}>{businessName}</div>
-                <div className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>{profile?.email ?? 'demo@vendsmart.app'}</div>
+                <div className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>{profile?.email ?? 'demo@vendsmart.example'}</div>
               </div>
               <div className="py-1">
                 <button
