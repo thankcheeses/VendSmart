@@ -65,8 +65,6 @@ function DashboardShell() {
 
   return (
     <div style={{ background: 'var(--bg-page)', minHeight: '100vh' }}>
-      {isDemoMode && <DemoBanner />}
-      {subscription && <UpgradeBanner machineCount={machines.length} machineLimit={subscription.machine_limit} />}
       <AppHeader
         activeNav={activeNav}
         onNavChange={handleNavChange}
@@ -75,14 +73,10 @@ function DashboardShell() {
         onAcknowledgeAlert={acknowledgeAlert}
       />
 
-      <div
-        style={{
-          marginTop: isDemoMode || (subscription && machines.length >= subscription.machine_limit) ? 40 : 0,
-          paddingTop: 56,
-          paddingRight: 0,
-        }}
-        className="xl:pr-[288px]"
-      >
+      {/* Offset for the fixed 56px header; on xl the fixed right rail takes 272px. */}
+      <div style={{ paddingTop: 56 }} className="xl:pr-[272px]">
+        {isDemoMode && <DemoBanner />}
+        {subscription && <UpgradeBanner machineCount={machines.length} machineLimit={subscription.machine_limit} />}
         <main className="px-4 sm:px-6 py-6">
           <Routes>
             <Route path="/" element={<FleetOverview />} />

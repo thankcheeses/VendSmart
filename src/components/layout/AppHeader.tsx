@@ -84,10 +84,10 @@ export default function AppHeader({ activeNav, onNavChange, alertCount = 0, aler
       className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-4 sm:px-6"
       style={{
         height: 56,
-        background: 'rgba(9, 9, 15, 0.92)',
+        background: 'rgba(255, 255, 255, 0.92)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
-        borderBottom: '1px solid rgba(255,255,255,0.06)',
+        borderBottom: '1px solid var(--border-subtle)',
       }}
     >
       {/* Brand */}
@@ -117,7 +117,7 @@ export default function AppHeader({ activeNav, onNavChange, alertCount = 0, aler
               className="px-3.5 py-2 text-[13px] font-medium transition-colors duration-150 rounded-md"
               style={{
                 color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
-                background: isActive ? 'rgba(255,255,255,0.05)' : 'transparent',
+                background: isActive ? 'var(--bg-elevated)' : 'transparent',
               }}
             >
               {item.label}

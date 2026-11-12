@@ -119,7 +119,7 @@ export default function AdminPage() {
         metadata: { target_email: tenant.email, target_plan: tenant.plan },
       });
       toast.success(`Impersonation session started for ${tenant.business_name}`);
-    } catch (err) {
+    } catch {
       toast.error('Failed to start impersonation session');
     } finally {
       setImpersonating(null);

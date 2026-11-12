@@ -73,7 +73,7 @@ export default function MachinesPage() {
           <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
             {machines.length} machines registered
             {planIsFree && subscription && (
-              <span style={{ color: 'var(--text-muted)' }}> · {subscription.machine_limit - machines.length} slots remaining on free plan</span>
+              <span style={{ color: 'var(--text-muted)' }}> · {Math.max(0, subscription.machine_limit - machines.length)} slots remaining on free plan</span>
             )}
           </p>
         </div>
