@@ -119,7 +119,7 @@ export default function SettingsPage() {
           <div>
             <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--text-muted)' }}>Email</label>
             <input
-              value={profile?.email ?? 'demo@vendsmart.app'}
+              value={profile?.email ?? 'demo@vendsmart.example'}
               disabled
               className="w-full px-3 py-2.5 rounded-lg text-sm outline-none"
               style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-subtle)', color: 'var(--text-muted)', cursor: 'not-allowed' }}

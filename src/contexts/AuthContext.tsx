@@ -27,9 +27,10 @@ const demoProfile: Profile = {
 const demoSubscription: Subscription = {
   id: 'demo-sub',
   user_id: 'demo-user',
-  plan: 'free',
+  // The demo fleet has 12 machines, so the demo account sits on the 25-machine plan.
+  plan: 'operator',
   status: 'active',
-  machine_limit: 5,
+  machine_limit: 25,
   created_at: new Date().toISOString(),
 };
 

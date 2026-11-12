@@ -400,7 +400,7 @@ export const dashboardMetrics: DashboardMetrics = {
 export const currentUser = {
   id: 'demo-user',
   business_name: 'Demo Operator',
-  email: 'demo@vendsmart.app',
+  email: 'demo@vendsmart.example',
 };
 
 export const mockRestockOrders: RestockOrder[] = [

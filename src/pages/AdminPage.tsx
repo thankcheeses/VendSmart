@@ -22,14 +22,14 @@ const MACHINE_LIMITS: Record<PlanType, number> = {
 };
 
 const mockTenants: AdminTenant[] = [
-  { user_id: 'u1', business_name: 'Metro Vend Co.', email: 'ops@metrovend.com', plan: 'pro', plan_status: 'active', machine_count: 47, weekly_revenue: 4320, machine_limit: 100, joined_at: '2024-11-12', last_active: '2025-06-07' },
-  { user_id: 'u2', business_name: 'QuickRefresh LLC', email: 'admin@quickrefresh.io', plan: 'operator', plan_status: 'active', machine_count: 18, weekly_revenue: 1890, machine_limit: 25, joined_at: '2025-01-03', last_active: '2025-06-08' },
-  { user_id: 'u3', business_name: 'Campus Eats', email: 'vendor@campuseats.edu', plan: 'free', plan_status: 'active', machine_count: 4, weekly_revenue: 340, machine_limit: 5, joined_at: '2025-03-19', last_active: '2025-06-05' },
-  { user_id: 'u4', business_name: 'Vend Solutions Inc.', email: 'billing@vendsolutions.com', plan: 'business', plan_status: 'active', machine_count: 212, weekly_revenue: 19440, machine_limit: -1, joined_at: '2024-09-01', last_active: '2025-06-08' },
-  { user_id: 'u5', business_name: 'SnackStop', email: 'owner@snackstop.co', plan: 'free', plan_status: 'active', machine_count: 5, weekly_revenue: 520, machine_limit: 5, joined_at: '2025-05-11', last_active: '2025-06-06' },
-  { user_id: 'u6', business_name: 'Automated Refreshments', email: 'ops@autorefresh.net', plan: 'pro', plan_status: 'past_due', machine_count: 63, weekly_revenue: 5810, machine_limit: 100, joined_at: '2024-07-22', last_active: '2025-05-30' },
-  { user_id: 'u7', business_name: 'GreenBreak Vending', email: 'hello@greenbreak.com', plan: 'operator', plan_status: 'active', machine_count: 11, weekly_revenue: 980, machine_limit: 25, joined_at: '2025-02-14', last_active: '2025-06-04' },
-  { user_id: 'u8', business_name: 'Elevate Vend', email: 'ceo@elevatevend.com', plan: 'enterprise', plan_status: 'active', machine_count: 340, weekly_revenue: 31200, machine_limit: -1, joined_at: '2024-05-30', last_active: '2025-06-08' },
+  { user_id: 'u1', business_name: 'Metro Vend Co.', email: 'ops@metrovend.example', plan: 'pro', plan_status: 'active', machine_count: 47, weekly_revenue: 4320, machine_limit: 100, joined_at: '2024-11-12', last_active: '2025-06-07' },
+  { user_id: 'u2', business_name: 'QuickRefresh LLC', email: 'admin@quickrefresh.example', plan: 'operator', plan_status: 'active', machine_count: 18, weekly_revenue: 1890, machine_limit: 25, joined_at: '2025-01-03', last_active: '2025-06-08' },
+  { user_id: 'u3', business_name: 'Campus Eats', email: 'vendor@campuseats.example', plan: 'free', plan_status: 'active', machine_count: 4, weekly_revenue: 340, machine_limit: 5, joined_at: '2025-03-19', last_active: '2025-06-05' },
+  { user_id: 'u4', business_name: 'Vend Solutions Inc.', email: 'billing@vendsolutions.example', plan: 'business', plan_status: 'active', machine_count: 212, weekly_revenue: 19440, machine_limit: -1, joined_at: '2024-09-01', last_active: '2025-06-08' },
+  { user_id: 'u5', business_name: 'SnackStop', email: 'owner@snackstop.example', plan: 'free', plan_status: 'active', machine_count: 5, weekly_revenue: 520, machine_limit: 5, joined_at: '2025-05-11', last_active: '2025-06-06' },
+  { user_id: 'u6', business_name: 'Automated Refreshments', email: 'ops@autorefresh.example', plan: 'pro', plan_status: 'past_due', machine_count: 63, weekly_revenue: 5810, machine_limit: 100, joined_at: '2024-07-22', last_active: '2025-05-30' },
+  { user_id: 'u7', business_name: 'GreenBreak Vending', email: 'hello@greenbreak.example', plan: 'operator', plan_status: 'active', machine_count: 11, weekly_revenue: 980, machine_limit: 25, joined_at: '2025-02-14', last_active: '2025-06-04' },
+  { user_id: 'u8', business_name: 'Elevate Vend', email: 'ceo@elevatevend.example', plan: 'enterprise', plan_status: 'active', machine_count: 340, weekly_revenue: 31200, machine_limit: -1, joined_at: '2024-05-30', last_active: '2025-06-08' },
 ];
 
 export default function AdminPage() {
@@ -119,7 +119,7 @@ export default function AdminPage() {
         metadata: { target_email: tenant.email, target_plan: tenant.plan },
       });
       toast.success(`Impersonation session started for ${tenant.business_name}`);
-    } catch (err) {
+    } catch {
       toast.error('Failed to start impersonation session');
     } finally {
       setImpersonating(null);
@@ -216,11 +216,11 @@ export default function AdminPage() {
 
       {/* Tenant table */}
       <div>
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
           <h3 className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
             Tenants {planFilter !== 'all' && `· ${planFilter}`} ({filtered.length})
           </h3>
-          <div className="flex gap-1">
+          <div className="flex flex-wrap gap-1">
             {(['all', 'free', 'operator', 'pro', 'business', 'enterprise'] as const).map(p => (
               <button
                 key={p}

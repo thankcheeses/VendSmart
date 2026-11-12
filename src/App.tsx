@@ -41,6 +41,18 @@ const pathToNav: Record<string, string> = Object.fromEntries(
   Object.entries(navToPath).map(([k, v]) => [v, k])
 );
 
+const pageTitles: Record<string, string> = {
+  '/': 'Dashboard',
+  '/machines': 'Machines',
+  '/analytics': 'Analytics',
+  '/alerts': 'Alerts',
+  '/restock': 'Restock Map',
+  '/orders': 'Orders',
+  '/settings': 'Settings',
+  '/admin': 'Admin',
+  '/fill-run': 'Fill Run',
+};
+
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
   if (loading) return <div style={{ background: 'var(--bg-page)', minHeight: '100vh' }} />;
@@ -65,8 +77,6 @@ function DashboardShell() {
 
   return (
     <div style={{ background: 'var(--bg-page)', minHeight: '100vh' }}>
-      {isDemoMode && <DemoBanner />}
-      {subscription && <UpgradeBanner machineCount={machines.length} machineLimit={subscription.machine_limit} />}
       <AppHeader
         activeNav={activeNav}
         onNavChange={handleNavChange}
@@ -75,14 +85,10 @@ function DashboardShell() {
         onAcknowledgeAlert={acknowledgeAlert}
       />
 
-      <div
-        style={{
-          marginTop: isDemoMode || (subscription && machines.length >= subscription.machine_limit) ? 40 : 0,
-          paddingTop: 56,
-          paddingRight: 0,
-        }}
-        className="xl:pr-[288px]"
-      >
+      {/* Offset for the fixed 56px header; on xl the fixed right rail takes 272px. */}
+      <div style={{ paddingTop: 56 }} className="xl:pr-[272px]">
+        {isDemoMode && <DemoBanner />}
+        {subscription && <UpgradeBanner machineCount={machines.length} machineLimit={subscription.machine_limit} />}
         <main className="px-4 sm:px-6 py-6">
           <Routes>
             <Route path="/" element={<FleetOverview />} />
@@ -109,10 +115,8 @@ function AppRoutes() {
   const location = useLocation();
 
   useEffect(() => {
-    const title = document.title;
-    const nav = pathToNav[location.pathname];
-    if (nav) document.title = `${nav.charAt(0).toUpperCase() + nav.slice(1)} — VendSmart`;
-    else document.title = title;
+    const label = pageTitles[location.pathname];
+    document.title = label ? `${label} — VendSmart` : 'VendSmart';
   }, [location.pathname]);
 
   if (loading) return <div style={{ background: 'var(--bg-page)', minHeight: '100vh' }} />;

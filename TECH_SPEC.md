@@ -2,7 +2,7 @@
 
 ## Overview
 
-VendSmart is a production SaaS for vending machine fleet management. Operators track machines in real-time, receive anomaly alerts, plan restocks, and analyze revenue — from a web app or native iOS/Android app.
+VendSmart is a work-in-progress demo of a vending machine fleet management app. Operators track machines, receive anomaly alerts, plan restocks, and analyze revenue from a web app; the Capacitor config for iOS/Android builds is included. The public site runs in Demo Mode against mock data.
 
 ---
 

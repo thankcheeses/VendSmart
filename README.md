@@ -5,7 +5,7 @@ analytics. React + Vite frontend with a Supabase backend.
 
 **Live:** https://thankcheeses.github.io/VendSmart/
 
-> Under construction.
+> Work in progress. The live site runs in Demo Mode against mock data.
 
 ## Quick start
 
@@ -40,3 +40,7 @@ Pushes to `main` are built and published to GitHub Pages by
 | `npm run lint` | ESLint |
 | `npm run preview` | Serve the last build locally |
 | `npm run cap:ios` / `cap:android` | Capacitor native builds |
+
+## Author
+
+Brianna Baynard · [LinkedIn](https://www.linkedin.com/in/brianna-baynard) · [GitHub](https://github.com/thankcheeses)
