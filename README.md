@@ -44,3 +44,7 @@ Pushes to `main` are built and published to GitHub Pages by
 ## Author
 
 Brianna Baynard · [LinkedIn](https://www.linkedin.com/in/brianna-baynard) · [GitHub](https://github.com/thankcheeses)
+
+## License
+
+MIT. See [LICENSE](LICENSE).
