@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Bell, LogOut, Settings, ChevronDown, AlertTriangle, X, CheckCheck, ArrowRight, Menu } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import VendingMachineIcon from '@/components/shared/VendingMachineIcon';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/useAuth';
 import type { MachineAlert } from '@/types';
 
 interface AppHeaderProps {

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Plus, Search, Edit3, Trash2, MapPin, Cpu, Calendar } from 'lucide-react';
 import type { Machine, MachineType } from '@/types';
 import { useMachines } from '@/hooks/useMachines';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/useAuth';
 import StatusBadge from '@/components/shared/StatusBadge';
 import ProgressBar from '@/components/shared/ProgressBar';
 

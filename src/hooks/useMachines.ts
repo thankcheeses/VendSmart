@@ -2,7 +2,19 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase, isDemoMode } from '@/lib/supabase';
 import { machines as mockMachines } from '@/data/mockData';
 import type { Machine } from '@/types';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/useAuth';
+
+/** Reads the signed-in user's machines, newest first. Touches no React state. */
+async function loadMachines(userId: string): Promise<{ machines: Machine[] | null; error: string | null }> {
+  if (!supabase) return { machines: null, error: null };
+  const { data, error } = await supabase
+    .from('machines')
+    .select('*')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false });
+  if (error) return { machines: null, error: error.message };
+  return { machines: (data as Machine[]) ?? [], error: null };
+}
 
 export function useMachines() {
   const { user } = useAuth();
@@ -10,32 +22,33 @@ export function useMachines() {
   const [loading, setLoading] = useState(!isDemoMode);
   const [error, setError] = useState<string | null>(null);
 
+  const apply = useCallback((result: Awaited<ReturnType<typeof loadMachines>>) => {
+    if (result.error) setError(result.error);
+    else if (result.machines) setMachines(result.machines);
+    setLoading(false);
+  }, []);
+
   const fetchMachines = useCallback(async () => {
     if (!supabase || !user) return;
-    setLoading(true);
-    const { data, error: err } = await supabase
-      .from('machines')
-      .select('*')
-      .eq('user_id', user.id)
-      .order('created_at', { ascending: false });
-    if (err) setError(err.message);
-    else setMachines((data as Machine[]) ?? []);
-    setLoading(false);
-  }, [user]);
+    apply(await loadMachines(user.id));
+  }, [user, apply]);
 
   useEffect(() => {
     if (isDemoMode || !supabase || !user) return;
-    fetchMachines();
+    // State is only set from the load's callback, never synchronously in the effect.
+    let active = true;
+    const refresh = () => {
+      loadMachines(user.id).then(result => { if (active) apply(result); });
+    };
+    refresh();
 
     const channel = supabase
       .channel(`machines:${user.id}`)
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'machines', filter: `user_id=eq.${user.id}` }, () => {
-        fetchMachines();
-      })
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'machines', filter: `user_id=eq.${user.id}` }, refresh)
       .subscribe();
 
-    return () => { supabase?.removeChannel(channel); };
-  }, [user, fetchMachines]);
+    return () => { active = false; supabase?.removeChannel(channel); };
+  }, [user, apply]);
 
   const addMachine = useCallback(async (data: Omit<Machine, 'id' | 'user_id' | 'created_at' | 'status' | 'fill_percentage' | 'weekly_revenue'>) => {
     if (isDemoMode) {
