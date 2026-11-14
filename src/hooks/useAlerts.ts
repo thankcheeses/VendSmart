@@ -2,7 +2,18 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase, isDemoMode } from '@/lib/supabase';
 import { alerts as mockAlerts } from '@/data/mockData';
 import type { MachineAlert } from '@/types';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/useAuth';
+
+/** Reads the signed-in user's alerts, newest first. Touches no React state. */
+async function loadAlerts(userId: string): Promise<MachineAlert[]> {
+  if (!supabase) return [];
+  const { data } = await supabase
+    .from('alerts')
+    .select('*')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false });
+  return (data as MachineAlert[]) ?? [];
+}
 
 export function useAlerts() {
   const { user } = useAuth();
@@ -11,19 +22,22 @@ export function useAlerts() {
 
   const fetchAlerts = useCallback(async () => {
     if (!supabase || !user) return;
-    setLoading(true);
-    const { data } = await supabase
-      .from('alerts')
-      .select('*')
-      .eq('user_id', user.id)
-      .order('created_at', { ascending: false });
-    setAlerts((data as MachineAlert[]) ?? []);
+    setAlerts(await loadAlerts(user.id));
     setLoading(false);
   }, [user]);
 
   useEffect(() => {
     if (isDemoMode || !supabase || !user) return;
-    fetchAlerts();
+    // State is only set from the load's callback, never synchronously in the effect.
+    let active = true;
+    const refresh = () => {
+      loadAlerts(user.id).then(data => {
+        if (!active) return;
+        setAlerts(data);
+        setLoading(false);
+      });
+    };
+    refresh();
 
     const channel = supabase
       .channel(`alerts:${user.id}`)
@@ -40,13 +54,11 @@ export function useAlerts() {
         schema: 'public',
         table: 'alerts',
         filter: `user_id=eq.${user.id}`,
-      }, () => {
-        fetchAlerts();
-      })
+      }, refresh)
       .subscribe();
 
-    return () => { supabase?.removeChannel(channel); };
-  }, [user, fetchAlerts]);
+    return () => { active = false; supabase?.removeChannel(channel); };
+  }, [user]);
 
   const acknowledgeAlert = useCallback(async (id: string) => {
     if (isDemoMode) {

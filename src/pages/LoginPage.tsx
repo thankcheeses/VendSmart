@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { Eye, EyeOff, Zap, BarChart2, Bell, Map } from 'lucide-react';
 import VendingMachineIcon from '@/components/shared/VendingMachineIcon';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/useAuth';
 
 const features = [
   { icon: BarChart2, label: 'Real-time analytics', desc: 'Revenue, fill rates, and trends at a glance' },

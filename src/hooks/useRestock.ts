@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase, isDemoMode } from '@/lib/supabase';
 import { machines as mockMachines, mockRestockOrders, mockSupplierIntegrations } from '@/data/mockData';
 import type { RestockOrder, RestockOrderLineItem, RestockQueueItem, SupplierIntegration } from '@/types';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/useAuth';
 
 function buildDemoQueue(): RestockQueueItem[] {
   const queue: RestockQueueItem[] = [];
@@ -38,6 +38,44 @@ function buildDemoQueue(): RestockQueueItem[] {
   return queue.sort((a, b) => a.days_until_stockout - b.days_until_stockout);
 }
 
+interface RestockData {
+  orders: RestockOrder[] | null;
+  draftItems: RestockOrderLineItem[] | null;
+  suppliers: SupplierIntegration[] | null;
+}
+
+/** Reads one user's orders, current draft and supplier links. Touches no React state. */
+async function loadRestock(userId: string): Promise<RestockData> {
+  if (!supabase) return { orders: null, draftItems: null, suppliers: null };
+
+  const { data } = await supabase
+    .from('restock_orders')
+    .select('*')
+    .eq('user_id', userId)
+    .neq('status', 'draft')
+    .order('created_at', { ascending: false });
+
+  const { data: draft } = await supabase
+    .from('restock_orders')
+    .select('*')
+    .eq('user_id', userId)
+    .eq('status', 'draft')
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .single();
+
+  const { data: sups } = await supabase
+    .from('supplier_integrations')
+    .select('*')
+    .eq('user_id', userId);
+
+  return {
+    orders: data ? (data as RestockOrder[]) : null,
+    draftItems: draft ? (draft as RestockOrder).line_items : null,
+    suppliers: sups ? (sups as SupplierIntegration[]) : null,
+  };
+}
+
 export function useRestock() {
   const { user } = useAuth();
 
@@ -53,47 +91,34 @@ export function useRestock() {
   const [restockQueue] = useState<RestockQueueItem[]>(buildDemoQueue());
   const [loading, setLoading] = useState(!isDemoMode);
 
+  const apply = useCallback((data: RestockData) => {
+    if (data.orders) setOrders(data.orders);
+    if (data.draftItems) setDraftItems(data.draftItems);
+    if (data.suppliers) setSuppliers(data.suppliers);
+    setLoading(false);
+  }, []);
+
   const fetchOrders = useCallback(async () => {
     if (!supabase || !user) return;
-    setLoading(true);
-    const { data } = await supabase
-      .from('restock_orders')
-      .select('*')
-      .eq('user_id', user.id)
-      .neq('status', 'draft')
-      .order('created_at', { ascending: false });
-    if (data) setOrders(data as RestockOrder[]);
-
-    const { data: draft } = await supabase
-      .from('restock_orders')
-      .select('*')
-      .eq('user_id', user.id)
-      .eq('status', 'draft')
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .single();
-    if (draft) setDraftItems((draft as RestockOrder).line_items);
-
-    const { data: sups } = await supabase
-      .from('supplier_integrations')
-      .select('*')
-      .eq('user_id', user.id);
-    if (sups) setSuppliers(sups as SupplierIntegration[]);
-
-    setLoading(false);
-  }, [user]);
+    apply(await loadRestock(user.id));
+  }, [user, apply]);
 
   useEffect(() => {
     if (isDemoMode || !supabase || !user) return;
-    fetchOrders();
+    // State is only set from the load's callback, never synchronously in the effect.
+    let active = true;
+    const refresh = () => {
+      loadRestock(user.id).then(data => { if (active) apply(data); });
+    };
+    refresh();
 
     const channel = supabase
       .channel(`restock_orders:${user.id}`)
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'restock_orders', filter: `user_id=eq.${user.id}` }, fetchOrders)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'restock_orders', filter: `user_id=eq.${user.id}` }, refresh)
       .subscribe();
 
-    return () => { supabase?.removeChannel(channel); };
-  }, [user, fetchOrders]);
+    return () => { active = false; supabase?.removeChannel(channel); };
+  }, [user, apply]);
 
   const addToDraft = useCallback((item: RestockOrderLineItem) => {
     setDraftItems(prev => {

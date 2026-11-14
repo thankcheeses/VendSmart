@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { Eye, EyeOff, Check, Zap } from 'lucide-react';
 import VendingMachineIcon from '@/components/shared/VendingMachineIcon';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/useAuth';
 
 const planPerks = [
   'Up to 5 machines free forever',

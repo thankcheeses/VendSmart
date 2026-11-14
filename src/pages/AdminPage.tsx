@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Shield, Users, DollarSign, Server, ChevronRight, Eye, RefreshCw, TrendingUp } from 'lucide-react';
 import { toast } from 'sonner';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/useAuth';
 import { supabase, isDemoMode } from '@/lib/supabase';
 import type { AdminTenant, PlanType } from '@/types';
 

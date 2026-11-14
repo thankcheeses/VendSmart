@@ -3,7 +3,7 @@ import { Camera, CheckCircle, ChevronDown, Minus, Plus, WifiOff } from 'lucide-r
 import { toast } from 'sonner';
 import { useMachines } from '@/hooks/useMachines';
 import { isDemoMode, supabase } from '@/lib/supabase';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/useAuth';
 
 interface SlotEntry {
   slot: number;

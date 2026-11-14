@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Check, Zap, Shield, CreditCard, User, Building2, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/useAuth';
 import { supabase, isDemoMode } from '@/lib/supabase';
 
 const plans = [
