@@ -224,6 +224,7 @@ export default function FillRunPage() {
                   className="p-2 rounded-md flex-shrink-0 transition-colors"
                   style={{ color: 'var(--text-muted)' }}
                   title="Take photo"
+                  aria-label={`Take photo of slot ${slot.slot}, ${slot.productName}`}
                   onMouseEnter={e => (e.currentTarget.style.color = 'var(--text-secondary)')}
                   onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
                 >
@@ -235,6 +236,7 @@ export default function FillRunPage() {
                   <button
                     onClick={() => adjustFilled(slot.slot, -1)}
                     disabled={slot.filled === 0}
+                    aria-label={`Remove one ${slot.productName}`}
                     className="flex items-center justify-center rounded-md transition-colors"
                     style={{
                       width: 36, height: 36,
@@ -254,6 +256,7 @@ export default function FillRunPage() {
                   <button
                     onClick={() => adjustFilled(slot.slot, 1)}
                     disabled={slot.filled >= slot.capacity - slot.currentStock}
+                    aria-label={`Add one ${slot.productName}`}
                     className="flex items-center justify-center rounded-md transition-colors"
                     style={{
                       width: 36, height: 36,
@@ -275,7 +278,7 @@ export default function FillRunPage() {
       <div
         className="fixed bottom-0 left-0 right-0 px-4 py-4 flex items-center justify-between gap-4 z-50"
         style={{
-          background: 'rgba(9,9,15,0.95)',
+          background: 'rgba(255,255,255,0.95)',
           backdropFilter: 'blur(12px)',
           WebkitBackdropFilter: 'blur(12px)',
           borderTop: '1px solid var(--border-subtle)',

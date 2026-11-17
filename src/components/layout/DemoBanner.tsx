@@ -24,7 +24,7 @@ export default function DemoBanner() {
           Connect Supabase to go live →
         </a>
       </span>
-      <button onClick={() => setVisible(false)} className="ml-auto" style={{ color: 'var(--text-muted)' }}>
+      <button onClick={() => setVisible(false)} aria-label="Dismiss demo mode notice" className="ml-auto -my-3 -mr-3 flex items-center justify-center w-11 h-11 flex-shrink-0" style={{ color: 'var(--text-muted)' }}>
         <X size={14} />
       </button>
     </div>

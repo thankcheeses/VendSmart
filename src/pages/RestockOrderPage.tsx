@@ -58,7 +58,7 @@ function FillBar({ pct }: { pct: number }) {
   const color = pct < 25 ? '#EF4444' : pct < 50 ? '#F59E0B' : '#22C55E';
   return (
     <div className="flex items-center gap-2 min-w-[80px]">
-      <div className="flex-1 h-1.5 rounded-full" style={{ background: 'rgba(255,255,255,0.08)' }}>
+      <div className="flex-1 h-1.5 rounded-full" style={{ background: 'var(--border-subtle)' }}>
         <div className="h-full rounded-full" style={{ width: `${pct}%`, background: color }} />
       </div>
       <span className="text-[11px] w-7 text-right" style={{ color }}>{pct}%</span>

@@ -37,7 +37,7 @@ export default function AlertsPage() {
   });
 
   const groupedAlerts = sortedAlerts.reduce((groups, alert) => {
-    const date = alert.created_at.split('T')[0];
+    const date = getDateGroupLabel(alert.created_at.split('T')[0]);
     if (!groups[date]) groups[date] = [];
     groups[date].push(alert);
     return groups;
@@ -88,7 +88,7 @@ export default function AlertsPage() {
           <div key={date}>
             <div className="flex items-center gap-2 mb-3" style={{ color: 'var(--text-muted)' }}>
               <Calendar size={13} />
-              <span className="text-xs font-semibold font-medium">{getDateGroupLabel(date)}</span>
+              <span className="text-xs font-semibold font-medium">{date}</span>
             </div>
             <div className="space-y-2">
               {dateAlerts.map(alert => {

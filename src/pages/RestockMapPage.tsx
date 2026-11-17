@@ -133,6 +133,7 @@ export default function RestockMapPage() {
               key={machine.id}
               position={[machine.latitude, machine.longitude]}
               icon={createColoredMarker(markerColors[machine.status])}
+              title={`${machine.name} — ${machine.status.replace('_', ' ')}`}
             >
               <Popup className="dark-popup">
                 <div style={{ minWidth: 200 }}>
