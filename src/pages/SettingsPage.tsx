@@ -106,8 +106,9 @@ export default function SettingsPage() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--text-muted)' }}>Business Name</label>
+            <label htmlFor="settings-business-name" className="block text-xs font-medium mb-1.5" style={{ color: 'var(--text-muted)' }}>Business Name</label>
             <input
+              id="settings-business-name"
               value={businessName}
               onChange={e => setBusinessName(e.target.value)}
               className="w-full px-3 py-2.5 rounded-lg text-sm outline-none"
@@ -117,8 +118,9 @@ export default function SettingsPage() {
             />
           </div>
           <div>
-            <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--text-muted)' }}>Email</label>
+            <label htmlFor="settings-email" className="block text-xs font-medium mb-1.5" style={{ color: 'var(--text-muted)' }}>Email</label>
             <input
+              id="settings-email"
               value={profile?.email ?? 'demo@vendsmart.example'}
               disabled
               className="w-full px-3 py-2.5 rounded-lg text-sm outline-none"

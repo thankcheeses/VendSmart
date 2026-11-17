@@ -305,6 +305,7 @@ export default function AdminPage() {
                             <Eye size={11} /> View
                           </button>
                           <button
+                            aria-label={`Open ${tenant.business_name}`}
                             className="p-1.5 rounded-md transition-colors"
                             style={{ color: 'var(--text-muted)' }}
                             onMouseEnter={e => { e.currentTarget.style.color = 'var(--text-primary)'; }}

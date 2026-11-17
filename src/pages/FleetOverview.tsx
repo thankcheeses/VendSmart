@@ -80,7 +80,7 @@ export default function FleetOverview() {
               {criticalAlerts.filter(a => a.severity === 'warning').length > 0 && `${criticalAlerts.filter(a => a.severity === 'warning').length} more need attention soon.`}
             </p>
           </div>
-          <button onClick={() => setAlertBannerVisible(false)} style={{ color: 'var(--text-muted)' }}><X size={14} /></button>
+          <button onClick={() => setAlertBannerVisible(false)} aria-label="Dismiss low stock notice" className="-my-3 -mr-3 flex items-center justify-center w-11 h-11 flex-shrink-0" style={{ color: 'var(--text-muted)' }}><X size={14} /></button>
         </div>
       )}
 
@@ -157,7 +157,7 @@ export default function FleetOverview() {
                         {machine.location_address.length > 28 ? machine.location_address.slice(0, 28) + '…' : machine.location_address}
                       </td>
                       <td className="px-3"><StatusBadge status={machine.status} /></td>
-                      <td className="px-3"><ProgressBar percentage={machine.fill_percentage} /></td>
+                      <td className="px-3"><ProgressBar percentage={machine.fill_percentage} width={56} /></td>
                       <td className="px-3 text-[13px] font-medium tabular-nums" style={{ color: 'var(--text-primary)' }}>${machine.weekly_revenue.toLocaleString()}</td>
                       <td className="px-3 text-[13px]" style={{ color: 'var(--text-secondary)' }}>{machine.last_visit_date}</td>
                     </tr>

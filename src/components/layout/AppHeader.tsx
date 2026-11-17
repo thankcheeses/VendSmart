@@ -104,7 +104,7 @@ export default function AppHeader({ activeNav, onNavChange, alertCount = 0, aler
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={menuOpen}
             aria-controls="mobile-nav"
-            className="p-2 -ml-2 rounded-md transition-colors"
+            className="flex items-center justify-center min-w-[44px] min-h-[44px] -ml-3 rounded-md transition-colors"
             style={{ color: 'var(--text-primary)', background: menuOpen ? 'var(--bg-elevated)' : 'transparent' }}
           >
             {menuOpen ? <X size={18} /> : <Menu size={18} />}
@@ -180,7 +180,7 @@ export default function AppHeader({ activeNav, onNavChange, alertCount = 0, aler
             aria-label={`Notifications${alertCount > 0 ? ` (${alertCount} unread)` : ''}`}
             aria-expanded={notifOpen}
             aria-haspopup="true"
-            className="relative p-2 rounded-md transition-colors"
+            className="relative flex items-center justify-center min-w-[44px] min-h-[44px] rounded-md transition-colors"
             style={{
               color: notifOpen ? 'var(--text-primary)' : 'var(--text-secondary)',
               background: notifOpen ? 'rgba(255,255,255,0.07)' : 'transparent',

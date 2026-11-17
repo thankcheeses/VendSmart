@@ -36,7 +36,7 @@ export default function RightRail({ alerts, metrics, onNavChange }: RightRailPro
         </div>
         <div className="relative inline-flex items-center justify-center">
           <svg width="76" height="76" viewBox="0 0 80 80">
-            <circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="5" />
+            <circle cx="40" cy="40" r="34" fill="none" stroke="var(--border-subtle)" strokeWidth="5" />
             <circle
               cx="40" cy="40" r="34" fill="none"
               stroke={scoreColor}
