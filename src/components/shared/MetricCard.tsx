@@ -4,7 +4,8 @@ interface MetricCardProps {
   label: string;
   value: string | number;
   subtitle: string;
-  change: number;
+  /** Percent change vs. the previous period. Omit when there is no previous-period data. */
+  change?: number;
   accentColor?: 'blue' | 'green' | 'amber' | 'cyan' | 'red';
   icon?: ReactNode;
 }
@@ -17,7 +18,7 @@ const accentMap = {
   red: '#EF4444',
 };
 
-export default function MetricCard({ label, value, subtitle, change, accentColor = 'blue', icon }: MetricCardProps) {
+export default function MetricCard({ label, value, subtitle, change = 0, accentColor = 'blue', icon }: MetricCardProps) {
   const isPositive = change >= 0;
   const accent = accentMap[accentColor];
 

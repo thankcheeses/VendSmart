@@ -65,11 +65,9 @@ export interface DashboardMetrics {
   activeMachines: number;
   totalMachines: number;
   weeklyRevenue: number;
-  revenueChange: number;
   lowStockAlerts: number;
   criticalAlerts: number;
   avgFillRate: number;
-  fillRateChange: number;
 }
 
 export interface Profile {
