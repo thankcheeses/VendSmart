@@ -13,7 +13,7 @@ const plans = [
     limit: 'Up to 5 machines',
     features: ['Up to 5 machines', 'Real-time alerts', 'Revenue analytics', 'Restock map', 'Basic AI predictions'],
     color: '#64748B',
-    cta: 'Current plan',
+    cta: 'Switch to Free',
   },
   {
     key: 'operator',
@@ -34,7 +34,6 @@ const plans = [
     features: ['Up to 100 machines', 'Supplier integrations', 'PDF reports', 'Priority support', 'Custom alerts', 'Multi-user access'],
     color: '#00d4c8',
     cta: 'Upgrade to Pro',
-    highlight: true,
   },
   {
     key: 'business',
@@ -47,6 +46,9 @@ const plans = [
     cta: 'Upgrade to Business',
   },
 ];
+
+const planOrder = ['free', 'operator', 'pro', 'business', 'enterprise'];
+const planRank = (key: string) => planOrder.indexOf(key);
 
 export default function SettingsPage() {
   const { profile, subscription } = useAuth();
@@ -177,24 +179,15 @@ export default function SettingsPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
           {plans.map(plan => {
             const isCurrent = subscription?.plan === plan.key;
+            // A plan ranked below the current one is not an upgrade, so it gets no upgrade button.
+            const isLower = !!subscription && planRank(plan.key) < planRank(subscription.plan);
             const planColor = plan.color;
             return (
               <div
                 key={plan.key}
                 className="glass-card relative flex flex-col"
-                style={{
-                  border: plan.highlight ? `1px solid rgba(0,212,200,0.25)` : '1px solid var(--border-subtle)',
-                  background: plan.highlight ? 'rgba(0,212,200,0.05)' : undefined,
-                }}
+                style={{ border: '1px solid var(--border-subtle)' }}
               >
-                {plan.highlight && (
-                  <div
-                    className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-semibold px-3 py-1 rounded-full"
-                    style={{ background: '#00d4c8', color: '#0f1117' }}
-                  >
-                    Most Popular
-                  </div>
-                )}
                 <div className="flex items-center gap-2 mb-3">
                   <CreditCard size={14} style={{ color: planColor }} />
                   <span className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>{plan.name}</span>
@@ -213,12 +206,13 @@ export default function SettingsPage() {
                   ))}
                 </div>
                 <button
-                  onClick={() => !isCurrent && handleUpgrade(plan.key)}
-                  disabled={isCurrent || upgrading === plan.key}
-                  className={isCurrent ? 'btn-secondary w-full' : 'btn-primary w-full'}
-                  style={{ opacity: isCurrent ? 0.6 : 1, cursor: isCurrent ? 'default' : 'pointer' }}
+                  onClick={() => !isCurrent && !isLower && handleUpgrade(plan.key)}
+                  disabled={isCurrent || isLower || upgrading === plan.key}
+                  className={isCurrent || isLower ? 'btn-secondary w-full' : 'btn-primary w-full'}
+                  style={{ opacity: isCurrent || isLower ? 0.6 : 1, cursor: isCurrent || isLower ? 'default' : 'pointer' }}
                 >
-                  {isCurrent ? <><Check size={13} /> {plan.cta}</>
+                  {isCurrent ? <><Check size={13} /> Current plan</>
+                    : isLower ? 'Below your current plan'
                     : upgrading === plan.key ? <><Loader2 size={13} className="animate-spin" /> Redirecting…</>
                     : plan.cta}
                 </button>

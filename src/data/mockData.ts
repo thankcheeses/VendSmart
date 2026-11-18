@@ -323,7 +323,22 @@ function generateDailyRevenue(): DailyRevenue[] {
       snack,
     });
   }
-  return days;
+  // Scale the series so the last 7 days add up to the fleet's weekly revenue
+  // (the sum of each machine's weekly_revenue). The dashboard and the
+  // analytics page then show the same total for the same week.
+  const fleetWeekly = machines.reduce((sum, m) => sum + m.weekly_revenue, 0);
+  const lastWeekRaw = days.slice(-7).reduce((sum, d) => sum + d.total, 0);
+  const factor = fleetWeekly / lastWeekRaw;
+  const scaled = days.map(d => ({
+    date: d.date,
+    total: Math.round(d.total * factor),
+    drink: Math.round(d.drink * factor),
+    snack: Math.round(d.snack * factor),
+  }));
+  // Put any rounding remainder on the last day so the 7-day sum is exact.
+  const lastWeekScaled = scaled.slice(-7).reduce((sum, d) => sum + d.total, 0);
+  scaled[scaled.length - 1].total += fleetWeekly - lastWeekScaled;
+  return scaled;
 }
 
 export const dailyRevenue: DailyRevenue[] = generateDailyRevenue();
@@ -387,14 +402,12 @@ export const dashboardMetrics: DashboardMetrics = {
   activeMachines: machines.filter(m => m.status === 'online').length,
   totalMachines: machines.length,
   weeklyRevenue: machines.reduce((sum, m) => sum + m.weekly_revenue, 0),
-  revenueChange: 7.2,
   lowStockAlerts: alerts.filter(a => !a.acknowledged && a.alert_type === 'low_stock').length,
   criticalAlerts: alerts.filter(a => !a.acknowledged && a.severity === 'critical').length,
   avgFillRate: Math.round(
     machines.filter(m => m.status !== 'offline').reduce((sum, m) => sum + m.fill_percentage, 0) /
     machines.filter(m => m.status !== 'offline').length
   ),
-  fillRateChange: -2.1,
 };
 
 export const currentUser = {

@@ -15,7 +15,7 @@ export default function DemoBanner() {
     >
       <Info size={15} style={{ color: 'var(--accent-blue)', flexShrink: 0 }} />
       <span style={{ color: 'var(--text-secondary)' }}>
-        <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>Demo Mode</span> — you're viewing mock data.{' '}
+        <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>Demo Mode</span> — every machine, sale and alert here is made-up sample data.{' '}
         <a
           href="#"
           style={{ color: 'var(--accent-blue)', fontWeight: 500 }}

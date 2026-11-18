@@ -8,12 +8,14 @@ interface RightRailProps {
 }
 
 export default function RightRail({ alerts, metrics, onNavChange }: RightRailProps) {
-  const recentAlerts = alerts.filter(a => !a.acknowledged).slice(0, 5);
-  const efficiencyScore = metrics.totalMachines > 0
-    ? Math.round((metrics.activeMachines / metrics.totalMachines) * 100 * (metrics.avgFillRate / 100))
+  const openAlerts = alerts.filter(a => !a.acknowledged);
+  const recentAlerts = openAlerts.slice(0, 5);
+  // Share of machines with status "online". Low stock, critical and offline machines are not counted.
+  const onlineShare = metrics.totalMachines > 0
+    ? Math.round((metrics.activeMachines / metrics.totalMachines) * 100)
     : 0;
 
-  const scoreColor = efficiencyScore >= 70 ? 'var(--accent-blue)' : efficiencyScore >= 40 ? 'var(--accent-amber)' : 'var(--accent-red)';
+  const scoreColor = onlineShare >= 70 ? 'var(--accent-blue)' : onlineShare >= 40 ? 'var(--accent-amber)' : 'var(--accent-red)';
 
   return (
     <div
@@ -29,10 +31,10 @@ export default function RightRail({ alerts, metrics, onNavChange }: RightRailPro
         zIndex: 50,
       }}
     >
-      {/* Fleet Efficiency Score */}
+      {/* Machines online */}
       <div className="glass-card text-center">
         <div className="text-xs font-medium mb-3" style={{ color: 'var(--text-muted)' }}>
-          Fleet efficiency
+          Machines online
         </div>
         <div className="relative inline-flex items-center justify-center">
           <svg width="76" height="76" viewBox="0 0 80 80">
@@ -41,15 +43,18 @@ export default function RightRail({ alerts, metrics, onNavChange }: RightRailPro
               cx="40" cy="40" r="34" fill="none"
               stroke={scoreColor}
               strokeWidth="5" strokeLinecap="round"
-              strokeDasharray={`${(efficiencyScore / 100) * 213.6} 213.6`}
+              strokeDasharray={`${(onlineShare / 100) * 213.6} 213.6`}
               transform="rotate(-90 40 40)"
               style={{ transition: 'stroke-dasharray 0.5s' }}
             />
           </svg>
-          <div className="absolute text-xl font-semibold" style={{ color: 'var(--text-primary)' }}>{efficiencyScore}%</div>
+          <div className="absolute text-xl font-semibold" style={{ color: 'var(--text-primary)' }}>{onlineShare}%</div>
         </div>
         <div className="text-xs mt-2" style={{ color: 'var(--text-secondary)' }}>
-          {metrics.activeMachines} of {metrics.totalMachines} machines active
+          {metrics.activeMachines} of {metrics.totalMachines} machines online
+        </div>
+        <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
+          Low stock, critical and offline machines are not counted.
         </div>
       </div>
 
@@ -60,9 +65,9 @@ export default function RightRail({ alerts, metrics, onNavChange }: RightRailPro
             <Bell size={12} style={{ color: 'var(--text-muted)' }} />
             <span className="text-xs font-medium" style={{ color: 'var(--text-muted)' }}>Recent alerts</span>
           </div>
-          {recentAlerts.length > 0 && (
+          {openAlerts.length > 0 && (
             <span className="text-xs px-1.5 py-0.5 rounded font-medium tabular-nums" style={{ background: 'rgba(239,68,68,0.12)', color: '#EF4444' }}>
-              {recentAlerts.length}
+              {openAlerts.length} open
             </span>
           )}
         </div>

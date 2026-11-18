@@ -13,11 +13,9 @@ export function useDashboardMetrics(machines: Machine[], alerts: MachineAlert[])
       activeMachines,
       totalMachines: machines.length,
       weeklyRevenue: machines.reduce((s, m) => s + m.weekly_revenue, 0),
-      revenueChange: 7.2,
       lowStockAlerts: alerts.filter(a => !a.acknowledged && a.alert_type === 'low_stock').length,
       criticalAlerts: alerts.filter(a => !a.acknowledged && a.severity === 'critical').length,
       avgFillRate,
-      fillRateChange: -2.1,
     };
   }, [machines, alerts]);
 }

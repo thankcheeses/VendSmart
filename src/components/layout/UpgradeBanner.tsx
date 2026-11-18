@@ -23,12 +23,12 @@ export default function UpgradeBanner({ machineCount, machineLimit }: UpgradeBan
     >
       <Zap size={15} style={{ color: 'var(--accent-amber)', flexShrink: 0 }} />
       <span style={{ color: 'var(--text-secondary)' }}>
-        <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>Free tier limit reached</span> — you're using {machineCount}/{machineLimit} machines.{' '}
+        <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>Plan limit reached</span> — you're using {machineCount}/{machineLimit} machines.{' '}
         <button
           onClick={() => navigate('/settings')}
           style={{ color: 'var(--accent-amber)', fontWeight: 500, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
         >
-          Upgrade to Pro for unlimited machines →
+          See plans with more machines →
         </button>
       </span>
       <button onClick={() => setVisible(false)} className="ml-auto" style={{ color: 'var(--text-muted)' }}>

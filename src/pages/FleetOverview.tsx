@@ -50,6 +50,9 @@ export default function FleetOverview() {
   }, [machines, sortKey, sortDir, statusFilter]);
 
   const criticalAlerts = alerts.filter(a => !a.acknowledged && (a.severity === 'critical' || a.severity === 'warning'));
+  const criticalCount = criticalAlerts.filter(a => a.severity === 'critical').length;
+  const warningCount = criticalAlerts.filter(a => a.severity === 'warning').length;
+  const criticalLowStock = alerts.filter(a => !a.acknowledged && a.alert_type === 'low_stock' && a.severity === 'critical').length;
 
   const SortIcon = ({ col }: { col: SortKey }) => {
     if (sortKey !== col) return null;
@@ -59,10 +62,10 @@ export default function FleetOverview() {
   return (
     <div className="space-y-5">
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-        <MetricCard label="Active Machines" value={dashboardMetrics.activeMachines} subtitle={`of ${dashboardMetrics.totalMachines} total`} change={5.6} accentColor="blue" icon={<Activity size={16} />} />
-        <MetricCard label="Weekly Revenue" value={`$${dashboardMetrics.weeklyRevenue.toLocaleString()}`} subtitle="7-day trailing" change={dashboardMetrics.revenueChange} accentColor="green" icon={<DollarSign size={16} />} />
-        <MetricCard label="Low Stock Alerts" value={dashboardMetrics.lowStockAlerts} subtitle={`${dashboardMetrics.criticalAlerts} critical`} change={-8} accentColor="amber" icon={<AlertTriangle size={16} />} />
-        <MetricCard label="Avg. Fill Rate" value={`${dashboardMetrics.avgFillRate}%`} subtitle="fleet average" change={dashboardMetrics.fillRateChange} accentColor="cyan" icon={<Gauge size={16} />} />
+        <MetricCard label="Machines Online" value={dashboardMetrics.activeMachines} subtitle={`of ${dashboardMetrics.totalMachines} total`} accentColor="blue" icon={<Activity size={16} />} />
+        <MetricCard label="Weekly Revenue" value={`$${dashboardMetrics.weeklyRevenue.toLocaleString()}`} subtitle="7-day trailing" accentColor="green" icon={<DollarSign size={16} />} />
+        <MetricCard label="Low Stock Alerts" value={dashboardMetrics.lowStockAlerts} subtitle={`${criticalLowStock} critical`} accentColor="amber" icon={<AlertTriangle size={16} />} />
+        <MetricCard label="Avg. Fill Rate" value={`${dashboardMetrics.avgFillRate}%`} subtitle="machines not offline" accentColor="cyan" icon={<Gauge size={16} />} />
       </div>
 
       {alertBannerVisible && criticalAlerts.length > 0 && (
@@ -74,13 +77,13 @@ export default function FleetOverview() {
           <div className="flex-1">
             <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
               <span className="font-medium" style={{ color: 'var(--text-primary)' }}>
-                {criticalAlerts.filter(a => a.severity === 'critical').length} machines
+                {criticalCount} critical {criticalCount === 1 ? 'alert' : 'alerts'}
               </span>{' '}
-              have critically low stock.{' '}
-              {criticalAlerts.filter(a => a.severity === 'warning').length > 0 && `${criticalAlerts.filter(a => a.severity === 'warning').length} more need attention soon.`}
+              open.{' '}
+              {warningCount > 0 && `${warningCount} ${warningCount === 1 ? 'warning needs' : 'warnings need'} attention soon.`}
             </p>
           </div>
-          <button onClick={() => setAlertBannerVisible(false)} aria-label="Dismiss low stock notice" className="-my-3 -mr-3 flex items-center justify-center w-11 h-11 flex-shrink-0" style={{ color: 'var(--text-muted)' }}><X size={14} /></button>
+          <button onClick={() => setAlertBannerVisible(false)} aria-label="Dismiss alerts notice" className="-my-3 -mr-3 flex items-center justify-center w-11 h-11 flex-shrink-0" style={{ color: 'var(--text-muted)' }}><X size={14} /></button>
         </div>
       )}
 
